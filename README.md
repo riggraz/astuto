@@ -13,6 +13,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Post-installation notes](#post-installation-notes)
+- [Deploy using Heroku](#deploy-using-heroku)
 - [Contributing](#contributing)
 
 ---
@@ -21,6 +22,7 @@
 
 Astuto is a free, open source, self-hosted customer feedback tool. It helps you collect, manage and prioritize feedback from your users.
 It has been heavely inspired by [Canny.io](https://canny.io/) ("astuto", indeed, is the italian translation of the word "canny").
+A demo app has been deployed to Heroku [here](https://astuto-demo.herokuapp.com/). For now, it is consuming somebody's free heroku hours, so please don't go wild all day long :). 
 
 <img src="./images/featured-image.png" />
 
@@ -58,6 +60,39 @@ It has been heavely inspired by [Canny.io](https://canny.io/) ("astuto", indeed,
 * When you want to launch Astuto you have to run `script/docker-run.sh`. If you installed new gems, packages or updated the database schema, you first need to run `script/docker-update.sh` and then `script/docker-run.sh`. You can run them together with `script/docker-update-and-run.sh`.
 * You can always run `script/docker-update-and-run.sh` if unsure whether you should update or not. However, please note that `script/docker-update-and-run.sh` takes more time to run than `script/docker-run.sh`.
 * If you changed some environment variables in `.env` you have to restart the instance for these changes to take effect.
+
+## Deploy Using Heroku
+The demo app has been deployed using heroku, using the `heroku.yml` file. To deploy another way, please clean out this file. The release phase of the deployment has been made in `Procfile`.
+More infos can be consulted in the Heroku's Guide [Building Docker Images with heroku.yml](https://devcenter.heroku.com/articles/build-docker-images-heroku-yml)
+#### Example of `heroku.yml`, `Procfile` and `bin/auto_migrate` files
+```
+# heroku.yml
+setup:
+  addons:
+    - plan: heroku-postgresql
+      as: DATABASE
+
+build:
+  docker:
+    web: docker/app/Dockerfile
+
+run:
+  web: bundle exec puma -C config/puma.rb
+```
+
+```
+# Procfile
+server: rails server -b 0.0.0.0 -p $PORT
+webpack: ./bin/webpack-dev-server
+release: bin/auto_migrate
+```
+
+```
+# bin/auto_migrate ; Remember to make it executable
+set -e
+
+bundle exec rake db:migrate
+```
 
 ## Contributing
 
