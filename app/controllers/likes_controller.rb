@@ -18,6 +18,7 @@ class LikesController < ApplicationController
     like = Like.new(like_params)
 
     if like.save
+      send_notifications(like)
       render json: {
         id: like.id,
         full_name: current_user.full_name,
@@ -55,4 +56,10 @@ class LikesController < ApplicationController
         user_id: current_user.id,
       }
     end
+
+  def send_notifications(like)
+    if like.post.user.notifications_enabled?
+      UserMailer.notify_post_owner_like(like: like).deliver_later
+    end
+  end
 end

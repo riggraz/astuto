@@ -1,5 +1,6 @@
 class Board < ApplicationRecord
   has_many :posts, dependent: :destroy
+  belongs_to :user
   
   after_initialize :set_order_to_last
 

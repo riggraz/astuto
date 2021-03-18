@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Hello, <%= @user.full_name %></h1>
+<p>
+  There is a new post by <%= @post.user.full_name %> on your board <b><%= @board.name %></b>
+</p>
+<p> To see this post, <%= link_to "Click here", post_url(@post,subdomain: @user.subdomain) %></p>
+<p>Have a great day!</p>
+</body>
+<footer>
+  Annoyed ? You can <%= link_to("turn off notifications here", edit_user_registration_url) %>
+</footer>
+</html>

@@ -28,6 +28,7 @@ class PostsController < ApplicationController
     post = Post.new(post_params)
 
     if post.save
+      UserMailer.new_post(post: post).deliver_later
       render json: post, status: :created
     else
       render json: {

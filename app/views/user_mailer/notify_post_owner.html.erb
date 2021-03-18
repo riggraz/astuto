@@ -8,7 +8,7 @@
     <p>
       There is a new comment by <%= @comment.user.full_name %> on your post <b><%= @comment.post.title %></b>
     </p>
-    <p> To see this comment, <%= link_to "Click here", post_url(@comment.post) %> </p>
+    <p> To see this comment, <%= link_to "Click here", post_url(@comment.post,subdomain: @user.subdomain) %> </p>
     <p>Have a great day!</p>
   </body>
   <footer>

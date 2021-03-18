@@ -2,7 +2,7 @@
   <div class="container">
     <%=
       link_to root_path, class: 'navbar-brand' do
-        app_name = content_tag :span, Rails.application.name
+        app_name = content_tag :span, 'feedbackuser'
         logo = image_tag(asset_pack_path('media/images/logo.png'), class: 'logo')
 
         Rails.application.show_logo? ? logo + app_name : app_name
@@ -29,6 +29,8 @@
               <span class="fullname"><%= current_user.full_name %></span>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <%= link_to 'Give Feedback!', 'http://feedback.feedbackuser.com/', class: 'dropdown-item' %>
+              <div class="dropdown-divider"></div>
               <%= link_to 'Profile settings', edit_user_registration_path, class: 'dropdown-item' %>
               <div class="dropdown-divider"></div>
               <%= link_to 'Sign out', destroy_user_session_path, method: :delete, class: 'dropdown-item' %>

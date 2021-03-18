@@ -9,19 +9,21 @@ as defined by the routes in the `admin/` namespace
 
 <nav class="navigation" role="navigation">
   <%= link_to(
-    "⇦ Back to site",
-    root_path,
-    class: "navigation__link button",
-    style: "color: #f6f7f7; background-color: #293f54; font-size: 15pt;",
-    "data-turbolinks": "false"
-  ) %>
+        "⇦ Back to site",
+        root_path,
+        class: "navigation__link button",
+        style: "color: #f6f7f7; background-color: #293f54; font-size: 15pt;",
+        "data-turbolinks": "false"
+      ) %>
 
   <% Administrate::Namespace.new(namespace).resources.each do |resource| %>
-    <%= link_to(
-      display_resource_name(resource),
-      [namespace, resource_index_route_key(resource)],
-      class: "navigation__link navigation__link--#{nav_link_state(resource)}",
-      style: "font-size: 15pt; text-decoration: none;"
-    ) %>
+    <% if show_resource(class_from_resource(resource))  %>
+      <%= link_to(
+            display_resource_name(resource),
+            [namespace, resource_index_route_key(resource)],
+            class: "navigation__link navigation__link--#{nav_link_state(resource)}",
+            style: "font-size: 15pt; text-decoration: none;"
+          ) %>
+    <% end %>
   <% end %>
 </nav>

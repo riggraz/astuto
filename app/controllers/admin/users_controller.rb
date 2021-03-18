@@ -2,6 +2,7 @@ module Admin
   class UsersController < Admin::ApplicationController
     before_action :default_order
 
+
     def default_order
       @order ||= Administrate::Order.new(
         params.fetch(resource_name, {}).fetch(:order, 'updated_at'),

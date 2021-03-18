@@ -9,6 +9,16 @@ module Admin
       )
     end
 
+    private
+
+    def scoped_resource
+      if current_user.role == 'admin'
+        Post.all
+      else
+        board_ids= current_user.boards.pluck(:id)
+        Post.where(board_id: board_ids)
+      end
+    end
     # See https://administrate-prototype.herokuapp.com/customizing_controller_actions
     # for more information
   end

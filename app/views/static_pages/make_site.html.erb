@@ -1,0 +1,19 @@
+<%= form_for(@user, url: make_site_post_path,method: :post) do |f| %>
+  <h2>Get Your Own Feedback Website!</h2>
+
+  <% if !Subdomain.matches?(request) %>
+    <div class="form-group">
+      <%= f.label :subdomain, class: "sr-only" %>
+      <%= f.text_field :subdomain, placeholder: "Subdomain", required: true, class: "form-control" %>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.hidden_field :role ,value: 'moderator' %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Get Subdomain", class: "btn btn-block" %>
+  </div>
+<% end %>
+

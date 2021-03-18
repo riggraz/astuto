@@ -13,6 +13,13 @@
     <%= f.email_field :email, autocomplete: "email", placeholder: "Email address", required: true, class: "form-control" %>
   </div>
 
+  <% if !Subdomain.matches?(request) %>
+    <div class="form-group">
+      <%= f.label :subdomain, class: "sr-only" %>
+      <%= f.text_field :subdomain, placeholder: "Subdomain", required: true, class: "form-control" %>
+    </div>
+  <% end %>
+
   <div class="form-group">
     <%= f.label :password, class: "sr-only" %>
     <%= f.password_field :password, placeholder: "Password", required: true, class: "form-control" %>
@@ -26,6 +33,10 @@
   <div class="form-group">
     <%= f.label :notifications_enabled %>
     <%= f.check_box :notifications_enabled %>
+  </div>
+
+  <div class="form-group">
+    <%= f.hidden_field :role ,value: Subdomain.matches?(request) ? 'user' : 'moderator' %>
   </div>
 
   <div class="actions">

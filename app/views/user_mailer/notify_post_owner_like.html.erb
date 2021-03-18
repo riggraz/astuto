@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+</head>
+<body>
+<h1>Hello, <%= @user.full_name %></h1>
+<p>
+  There is a new like by <%= @like.user.full_name %> on your post <b><%= @like.post.title %></b>
+</p>
+<p> To see this like, <%= link_to "Click here", post_url(@like.post,subdomain: @user.subdomain) %> </p>
+<p>Have a great day!</p>
+</body>
+<footer>
+  Annoyed ? You can <%= link_to("turn off notifications here", edit_user_registration_url) %>
+</footer>
+</html>
