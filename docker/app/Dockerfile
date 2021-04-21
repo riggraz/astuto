@@ -1,6 +1,6 @@
 FROM ruby:2.6.3
 
-RUN curl -sL https://deb.nodesource.com/setup_11.x | bash -
+RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN npm install -g yarn
 
@@ -27,9 +27,6 @@ RUN yarn install --check-files
 
 COPY . ${APP_ROOT}
 
-# Add a script to be executed every time the container starts.
-ENTRYPOINT ["./docker-entrypoint.sh"]
+ENTRYPOINT /bin/bash /${APP_ROOT}/docker-entrypoint.sh
 
 EXPOSE 3000
-
-# No default CMD is provided in Dockerfile
