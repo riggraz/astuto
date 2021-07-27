@@ -1,5 +1,20 @@
-<% boards.each do |board| %>
-  <li class="nav-item<%= board.id == @board.id ? ' active' : '' unless @board.nil? %>">
-    <%= link_to board.name, board_path(board), class: 'nav-link' %>
+<% if @boards.length > 5 %>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Boards
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+      <% boards.each do |board| %>
+        <li class="<%= board.id == @board&.id ? 'active' : '' %>">
+          <%= link_to board.name, board_path(board), class: 'nav-link' %>
+        </li>
+      <% end %>
+    </ul>
   </li>
+<% else %>
+  <% boards.each do |board| %>
+    <li class="nav-item<%= board.id == @board&.id ? ' active' : '' %>">
+      <%= link_to board.name, board_path(board), class: 'nav-link' %>
+    </li>
+  <% end %>
 <% end %>
