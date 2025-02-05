@@ -1,12 +1,12 @@
 es:
   common:
     words:
-      or: 'or'
+      or: 'o'
     errors:
       unknown: 'Error no determinado, intente nuevamente'
     validations:
       required: '%{attribute} es obligatorio'
-      email: 'Email invalido'
+      email: 'Correo electrónico inválido'
       url: 'URL no válida'
       password: 'La contraseña debe tener al menos %{n} caracteres'
       password_mismatch: 'Las contraseñas no coinciden'
@@ -19,8 +19,13 @@ es:
         new_password: 'Nueva contraseña'
         new_password_confirmation: 'Confirmación de nueva contraseña'
         current_password: 'Contraseña actual'
-        notifications_enabled: 'Notificaciones habilitadas'
+        notifications: 'Notifications'
         notifications_enabled_help: "si está deshabilitado, no recibirás ninguna notificación"
+        recap_notification_frequency_never: 'Never'
+        recap_notification_frequency_daily: 'Daily'
+        recap_notification_frequency_weekly: 'Weekly'
+        recap_notification_frequency_monthly: 'Monthly'
+        recap_notification_frequency_help: 'recap notifications let you know if new feedback has been submitted or is waiting for your approval'
         waiting_confirmation: 'Esperando confirmación de %{email}'
         no_password_set: 'Debe indicar una contraseña para actualizar su perfil'
         set_password: 'Configure contraseña'
@@ -42,13 +47,21 @@ es:
         resend_unlock_instructions: 'Reenviar instrucciones de desbloqueo'
         change_password: 'Cambiar contraseña'
         password_help: 'mínimo %{count} caracteres'
-        email_registration_not_allowed: 'Email registration not allowed'
+        email_registration_not_allowed: 'Registro de correo no permitido'
+      api_key:
+        title: 'API key'
+        current_api_key_help: 'Ya has generado una clave API y por razones de seguridad, no se puede volver a mostrar. Si lo perdiste, puedes generar uno nuevo a continuación.'
+        generate_api_key: 'Generate API key'
+        generated_api_key_help: 'Save this API key in a safe place, as you will not be able to see it again.'
+        generated_api_key_successfully: 'API key generated successfully!'
+        confirm_generate_new_api_key: 'Are you sure you want to generate a new API key? The old one will be invalidated.'
+        api_key_learn_more: 'Learn how to use the API'
     comments_number:
       one: '1 comentario'
       other: '%{count} comentarios'
     no_status: 'Sin estado'
-    select_no_options_available: 'No options available'
-    select_placeholder: 'Select...'
+    select_no_options_available: 'No hay opciones disponibles'
+    select_placeholder: 'Seleccionar...'
     loading: 'Cargando...'
     confirmation: '¿Está seguro?'
     confirmation_board_delete: 'Advertencia: si hay mensajes de retroalimentación en este foro, entonces TODOS estos mensajes serán borrados también. Esta acción no se puede deshacer.'
@@ -58,6 +71,7 @@ es:
     disabled: 'Deshabilitado'
     copied: '¡Copiado!'
     user_staff: 'Empleados'
+    language_supported: '%{language} supported'
     powered_by: 'Impulsado por'
     buttons:
       new: 'Nuevo'
@@ -70,9 +84,10 @@ es:
       back: 'Atrás'
       test: 'Probar'
       clear: 'Restablecer'
-      approve: 'Approve'
-      reject: 'Reject'
-      copy_to_clipboard: 'Copy to clipboard'
+      approve: 'Aprobar'
+      reject: 'Rechazar'
+      copy_to_clipboard: 'Copiar al portapapeles'
+      preview: 'Preview'
     datetime:
       now: 'ahora mismo'
       minutes:
@@ -85,16 +100,16 @@ es:
         one: 'Hace 1 día'
         other: 'hace %{count} días'
       months:
-        one: '1 month ago'
-        other: '%{count} months ago'
+        one: 'hace 1 mes'
+        other: 'hace %{count} meses'
       years:
-        one: '1 year ago'
-        other: '%{count} years ago'
+        one: 'hace 1 año'
+        other: 'hace %{count} años'
   header:
     menu:
       administration_header: 'Administración'
       site_settings: 'Configuración del sitio'
-      moderation: 'Moderation'
+      moderation: 'Moderación'
       profile_header: 'Perfil'
       profile_settings: 'Configuración de perfil'
       help_header: 'Ayuda'
@@ -112,16 +127,16 @@ es:
   board:
     new_post:
       submit_button: 'Enviar retroalimentación'
-      submit_anonymous_button: 'Submit anonymously'
+      submit_anonymous_button: 'Enviar anónimamente'
       cancel_button: 'Cancelar'
       login_button: 'Iniciar sesión / Registrarse'
       title: 'Título'
       description: 'Descripción (opcional)'
       no_title: 'El campo Título es obligatorio'
-      anonymous_submission_help: 'You are posting anonymously'
-      non_anonymous_submission_help: 'You are posting as %{name}'
+      anonymous_submission_help: 'Estás publicando anónimamente'
+      non_anonymous_submission_help: 'Estás publicando como %{name}'
       submit_success: '¡Comentarios publicados! Serás redirigido pronto...'
-      submit_pending: 'Your feedback has been submitted and is now pending moderator approval!'
+      submit_pending: 'Su opinión ha sido enviada y ahora está pendiente de aprobación del moderador!'
     search_box:
       title: 'Buscar'
     filter_box:
@@ -141,7 +156,7 @@ es:
   post:
     edit_button: 'Editar'
     published_by: 'Publicado por'
-    published_anonymously: 'Published anonymously'
+    published_anonymously: 'Publicado anónimamente'
     post_status_select:
       no_post_status: 'Ninguno'
     updates_box:
@@ -158,6 +173,7 @@ es:
       not_following_description: "no recibirás notificaciones sobre esta publicación"
     comments:
       title: 'Actividad'
+      empty: 'Todavía no hay comentarios'
       post_update_badge: 'Actualización'
       reply_button: 'Responder'
     new_comment:
@@ -174,7 +190,8 @@ es:
       boards: 'Tableros'
       post_statuses: 'Estados'
       roadmap: 'Hoja de ruta'
-      invitations: 'Invitations'
+      webhooks: 'Webhooks'
+      invitations: 'Invitaciones'
       appearance: 'Apariencia'
     info_box:
       up_to_date: 'Se han guardado todos los cambios'
@@ -186,19 +203,19 @@ es:
       brand_setting_name: 'Solo el nombre'
       brand_setting_logo: 'Sólo Logo'
       brand_setting_none: 'Ninguno'
-      use_browser_locale_help: "If you enable this setting, the feedback space will be displayed in the user's browser preferred language. If the language is not available, the default language will be used."
-      subtitle_privacy: 'Privacy'
-      is_private_help: 'If you enable this setting, only logged in users will be able to see the content of the feedback space.'
-      subtitle_moderation: 'Moderation'
-      allow_anonymous_feedback_help: 'If you enable this setting, unregistered users will be able to submit feedback.'
-      feedback_approval_policy_anonymous_require_approval: 'Require approval for anonymous feedback only'
-      feedback_approval_policy_never_require_approval: 'Never require approval'
-      feedback_approval_policy_always_require_approval: 'Always require approval'
-      feedback_approval_policy_help: 'If you require approval, submitted feedback will remain hidden from the public until a moderator or administrator approves it. Feedback submitted by moderators and administrators is always approved automatically.'
+      use_browser_locale_help: "Si activa esta configuración, el espacio de retroalimentación se mostrará en el idioma preferido del navegador del usuario. Si el idioma no está disponible, se utilizará el idioma predeterminado."
+      subtitle_privacy: 'Privacidad'
+      is_private_help: 'Si activa esta configuración, solo quiénes ingresaron con su usuario podrán ver el contenido del espacio de comentarios.'
+      subtitle_moderation: 'Moderación'
+      allow_anonymous_feedback_help: 'Si activa esta configuración, los usuarios no registrados podrán enviar comentarios.'
+      feedback_approval_policy_anonymous_require_approval: 'Requiere aprobación sólo para comentarios anónimos'
+      feedback_approval_policy_never_require_approval: 'Nunca requerir aprobación'
+      feedback_approval_policy_always_require_approval: 'Siempre solicitar aprobación'
+      feedback_approval_policy_help: 'Si necesita aprobación, los comentarios enviados permanecerán ocultos hasta que un moderador o administrador lo apruebe. Los comentarios enviados por los moderadores y administradores siempre son aprobados automáticamente.'
       subtitle_header: 'Cabecera'
-      logo_links_to_root_page: 'Root page'
-      logo_links_to_custom_url: 'Custom URL'
-      logo_links_to_nothing: 'Nothing'
+      logo_links_to_root_page: 'Página raíz'
+      logo_links_to_custom_url: 'URL personalizada'
+      logo_links_to_nothing: 'Nada'
       collapse_boards_in_header_no_collapse: 'Nunca'
       collapse_boards_in_header_always_collapse: 'Siempre'
       subtitle_visibility: 'Visibilidad'
@@ -206,7 +223,7 @@ es:
       custom_domain_learn_more: 'Aprenda cómo configurar un dominio personalizado'
       show_vote_count_help: 'Si activa esta configuración, los usuarios podrán ver el recuento de votos de los mensajes. Esto puede incentivar a los usuarios a votar publicaciones ya populares, lo que provocaría un efecto bola de nieve.'
       show_vote_button_in_board_help: 'Si activas esta configuración, los usuarios podrán votar publicaciones desde la página del foro. Esto puede alentar a los usuarios a votar en más mensajes, lo que lleva a un mayor número de votos, pero de menor importancia.'
-      hide_unused_statuses_in_filter_by_status_help: 'If you enable this setting, only statuses that are assigned to at least one post in that board will be shown in the filter by status sidebar filter.'
+      hide_unused_statuses_in_filter_by_status_help: 'Si activa esta configuración, sólo los estados que están asignados al menos a un mensaje en ese foro se mostrarán en el filtro por estado de la barra de filtro.'
     boards:
       title: 'Tableros'
       empty: 'No hay tableros. ¡Crea uno abajo!'
@@ -223,57 +240,58 @@ es:
     roadmap:
       title: 'Hoja de ruta'
       title2: 'No en la hoja de ruta'
-      title_embed: 'Embed roadmap'
+      title_embed: 'Insertar roadmap'
       empty: 'La hoja de ruta está vacía.'
       help: 'Puedes agregar estados a la hoja de ruta arrastrándolos desde la sección de abajo. Si en cambio quieres crear un nuevo estado o cambiar su orden, ve a Configuración del sitio > Estados.'
-      show_board_filter: 'Show board filter'
-      show_post_status_filter: 'Show status filter'
-      embed_help: 'You can embed the roadmap in your website by copying the code above.'
+      show_board_filter: 'Mostrar barra de filtro'
+      show_post_status_filter: 'Mostrar filtro de estado'
+      embed_help: 'Puede insertar el mapa de ruta en un sitio web copiando el código anterior.'
     invitations:
-      new_invitations_title: 'New invitations'
-      past_invitations_title: 'Invitations'
-      to: 'Send invitations to'
-      to_help: 'Email addresses of people you want to invite, separated by commas.'
-      subject: 'Email subject'
-      subject_default: 'We value your feedback! Join us in shaping %{name}!'
-      body: 'Email body'
+      new_invitations_title: 'Nuevas invitaciones'
+      past_invitations_title: 'Invitaciones'
+      to: 'Enviar invitaciones a'
+      to_help: 'Direcciones de correo electrónico de personas que desea invitar, separadas por comas.'
+      subject: 'Asunto del email'
+      subject_default: '¡Valoramos tus comentarios! ¡Únete a nosotros para dar forma a %{name}!'
+      body: 'Cuerpo del email'
       body_default: |
-        Hello!
+        Hola!
 
-        We truly appreciate your experience with %{name} and would love to hear your feedback. Your insights help us improve and continue delivering the best possible service.
+        Verdaderamente apreciamos tu experiencia con %{name} y nos encantaría conocer tus comentarios. Las opiniones nos ayudan a mejorar y continuar el desarrollo lo mejor posible.
 
-        Click the link below to share your thoughts and make your voice heard:
+        Haz click en el link de abajo para unirte a nuestra comunidad y hacer llegar tu opinión:
 
         %link%
 
-        Have a great day!
+        Que tengas el mejor dia!
       send:
-        one: 'Send invitation'
-        other: 'Send %{count} invitations'
-      submit_success: 'Invitations sent!'
-      submit_failure: 'An error occurred while sending invitations'
-      invalid_emails: 'Invalid email addresses: %{emails}'
-      too_many_emails: 'You can only send %{count} invitations at a time.'
-      invitation_link_not_found: 'You must use the %link% placeholder in the email body'
-      test_invitation_button: 'Test send invitation'
-      test_invitation_help: 'This will send a test invitation email to %{email}'
-      test_invitation_success: 'A test invitation email has been sent to %{email}'
-      all: 'All'
-      pending: 'Pending'
-      accepted: 'Accepted'
-      sent_at: 'Sent %{when}'
-      accepted_at: 'Accepted %{when}'
+        one: 'Enviar invitación'
+        other: 'Enviar %{count} invitaciones'
+      submit_success: '¡Invitaciones enviadas!'
+      submit_failure: 'Se ha producido un error al enviar las invitaciones'
+      invalid_emails: 'Dirección de correo inválida: %{emails}'
+      too_many_emails: 'Solo puedes enviar %{count} invitaciones por vez.'
+      invitation_link_not_found: 'Debes usar el marcador de posición %link% en el cuerpo del correo electrónico'
+      test_invitation_button: 'Probar enviar invitación'
+      test_invitation_help: 'Esto enviará un correo de invitación de prueba a %{email}'
+      test_invitation_success: 'Un correo electrónico de invitación de prueba ha sido enviado a %{email}'
+      all: 'Todos'
+      pending: 'Pendiente'
+      accepted: 'Aceptado'
+      sent_at: 'Enviado %{when}'
+      accepted_at: 'Aceptado %{when}'
+      expired: 'Expired'
     appearance:
       title: 'Apariencia'
       learn_more: 'Aprende cómo personalizar la apariencia'
     authentication:
       title: 'Autenticación'
       learn_more: 'Aprende cómo configurar proveedores OAuth personalizados'
-      email_registration_subtitle: 'Email registration'
-      email_registration_policy_all: 'Anyone can register with email'
-      email_registration_policy_none: 'No one can register with email'
-      email_registration_policy_custom: 'Only users with certain email domains can register with email'
-      allowed_email_domains_help: 'Separate domains with commas. Example: "gmail.com,yahoo.com,hotmail.com". Leave blank to allow any domain.'
+      email_registration_subtitle: 'Registro de correo electrónico'
+      email_registration_policy_all: 'Cualquiera puede registrarse con correo electrónico'
+      email_registration_policy_none: 'Nadie puede registrarse con correo electrónico'
+      email_registration_policy_custom: 'Sólo los usuarios con ciertos dominios de correo pueden registrarse con correo electrónico'
+      allowed_email_domains_help: 'Separar dominios con comas. Ejemplo: "gmail.com,yahoo.com,hotmail.com". Dejar en blanco para permitir cualquier dominio.'
       oauth_subtitle: 'Proveedores OAuth'
       default_oauth: 'Proveedor OAuth por defecto'
       copy_url: 'Copiar URL'
@@ -291,14 +309,41 @@ es:
         subtitle_oauth_config: 'Configuración OAuth'
         subtitle_user_profile_config: 'Configuración del perfil de usuario'
         client_secret_help: 'oculto por motivos de seguridad'
+    webhooks:
+      title: 'Webhooks'
+      learn_more: 'Learn how to configure and use webhooks'
+      empty: 'There are no webhooks.'
+      triggers:
+        new_post: 'New post'
+        new_post_pending_approval: 'New post (pending approval)'
+        delete_post: 'Delete post'
+        post_status_change: 'Post status change'
+        new_comment: 'New comment'
+        new_vote: 'New vote'
+        new_user: 'New user'
+      http_methods:
+        post: 'POST'
+        put: 'PUT'
+        patch: 'PATCH'
+        delete: 'DELETE'
+      form:
+        title_new: 'New webhook'
+        title_edit: 'Edit webhook'
+        add_header: 'Add header'
+        header_n_key: 'Header %{n} key'
+        header_n_value: 'Header %{n} value'
+        template_variables_selector_placeholder: 'Select a template variable...'
+        preview_error: 'There is an error in your template'
+      test_page:
+        title: 'Webhook test results'
   moderation:
     menu:
-      feedback: 'Feedback'
-      users: 'Users'
+      feedback: 'Retroalimentación'
+      users: 'Usuarios'
     feedback:
-      anonymous_feedback_allowed: 'Anonymous feedback allowed'
-      anonymous_feedback_not_allowed: 'Anonymous feedback not allowed'
-      change_feedback_moderation_settings: 'Change feedback moderation settings'
+      anonymous_feedback_allowed: 'Comentarios anónimos permitidos'
+      anonymous_feedback_not_allowed: 'Comentarios anónimos no permitidos'
+      change_feedback_moderation_settings: 'Cambiar ajustes de moderación de comentarios'
     users:
       title: 'Usuarios'
       block: 'Bloquear'

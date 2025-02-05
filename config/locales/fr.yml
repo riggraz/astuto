@@ -19,8 +19,13 @@ fr:
         new_password: 'Nouveau mot de passe'
         new_password_confirmation: 'Confirmer le nouveau mot de passe'
         current_password: 'Mot de passe actuel'
-        notifications_enabled: 'Notifications activées'
+        notifications: 'Notifications'
         notifications_enabled_help: "si désactivé, vous ne recevrez aucune notification"
+        recap_notification_frequency_never: 'Never'
+        recap_notification_frequency_daily: 'Daily'
+        recap_notification_frequency_weekly: 'Weekly'
+        recap_notification_frequency_monthly: 'Monthly'
+        recap_notification_frequency_help: 'recap notifications let you know if new feedback has been submitted or is waiting for your approval'
         waiting_confirmation: 'En attente de confirmation de : %{email}'
         no_password_set: 'Vous devez définir un mot de passe pour mettre à jour votre profil'
         set_password: 'Définir un mot de passe'
@@ -43,6 +48,14 @@ fr:
         change_password: 'Changer le mot de passe'
         password_help: '%{count} caractères minimum'
         email_registration_not_allowed: 'Email registration not allowed'
+      api_key:
+        title: 'API key'
+        current_api_key_help: 'You have already generated an API key and, for security reasons, it cannot be shown again. If you lost it, you can generate a new one below.'
+        generate_api_key: 'Generate API key'
+        generated_api_key_help: 'Save this API key in a safe place, as you will not be able to see it again.'
+        generated_api_key_successfully: 'API key generated successfully!'
+        confirm_generate_new_api_key: 'Are you sure you want to generate a new API key? The old one will be invalidated.'
+        api_key_learn_more: 'Learn how to use the API'
     comments_number:
       one: '1 commentaire'
       other: '%{count} commentaires'
@@ -58,6 +71,7 @@ fr:
     disabled: 'Désactivé'
     copied: 'Copié !'
     user_staff: 'Équipe'
+    language_supported: '%{language} supported'
     powered_by: 'Propulsé par'
     buttons:
       new: 'Nouveau'
@@ -73,6 +87,7 @@ fr:
       approve: 'Approuver'
       reject: 'Rejeter'
       copy_to_clipboard: 'Copy to clipboard'
+      preview: 'Preview'
     datetime:
       now: 'à l’instant'
       minutes:
@@ -158,6 +173,7 @@ fr:
       not_following_description: "vous ne recevrez pas de notifications concernant cette publication"
     comments:
       title: 'Activité'
+      empty: 'There are no comments yet'
       post_update_badge: 'Mettre à jour'
       reply_button: 'Répondre'
     new_comment:
@@ -174,6 +190,7 @@ fr:
       boards: 'Tableaux'
       post_statuses: 'Statuts'
       roadmap: 'Feuille de route'
+      webhooks: 'Webhooks'
       invitations: 'Invitations'
       appearance: 'Apparence'
     info_box:
@@ -263,6 +280,7 @@ fr:
       accepted: 'Accepted'
       sent_at: 'Sent %{when}'
       accepted_at: 'Accepted %{when}'
+      expired: 'Expired'
     appearance:
       title: 'Apparence'
       learn_more: 'Apprendre à personnaliser l''apparence'
@@ -291,6 +309,33 @@ fr:
         subtitle_oauth_config: 'Configuration OAuth'
         subtitle_user_profile_config: 'Configuration du profil utilisateur'
         client_secret_help: 'masqué pour des raisons de sécurité'
+    webhooks:
+      title: 'Webhooks'
+      learn_more: 'Learn how to configure and use webhooks'
+      empty: 'There are no webhooks.'
+      triggers:
+        new_post: 'New post'
+        new_post_pending_approval: 'New post (pending approval)'
+        delete_post: 'Delete post'
+        post_status_change: 'Post status change'
+        new_comment: 'New comment'
+        new_vote: 'New vote'
+        new_user: 'New user'
+      http_methods:
+        post: 'POST'
+        put: 'PUT'
+        patch: 'PATCH'
+        delete: 'DELETE'
+      form:
+        title_new: 'New webhook'
+        title_edit: 'Edit webhook'
+        add_header: 'Add header'
+        header_n_key: 'Header %{n} key'
+        header_n_value: 'Header %{n} value'
+        template_variables_selector_placeholder: 'Select a template variable...'
+        preview_error: 'There is an error in your template'
+      test_page:
+        title: 'Webhook test results'
   moderation:
     menu:
       feedback: 'Commentaires'

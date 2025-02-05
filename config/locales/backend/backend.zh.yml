@@ -50,6 +50,11 @@ zh-CN:
       notify_follower_of_post_status_change:
         subject: '[%{site_name}] 帖子状态变化 "%{post}"'
         body_html: '您关注的帖子 <b>%{post}</b> 状态发生改变'
+      recap:
+        subject: '[%{site_name}] %{frequency} recap of feedback space activity'
+        body_html: 'Here is the %{frequency} recap of activities in your feedback space'
+        published_posts_count_html: 'New published feedback: %{count}'
+        pending_posts_count_html: 'New feedback pending approval: %{count}'
   activerecord:
     models:
       board:
@@ -66,6 +71,8 @@ zh-CN:
         other: '帖子'
       user:
         other: '用户'
+      webhook:
+        other: 'Webhooks'
     attributes:
       board:
         name: '名称'
@@ -141,6 +148,16 @@ zh-CN:
         password_confirmation: '确认密码'
         role: '角色'
         notifications_enabled: '开启通知'
+        recap_notification_frequency: 'Recap notification frequency'
+      webhook:
+        name: 'Name'
+        description: 'Description'
+        is_enabled: 'Enabled'
+        trigger: 'Trigger'
+        url: 'URL'
+        http_body: 'HTTP request body'
+        http_method: 'HTTP method'
+        http_headers: 'HTTP request headers'
     errors:
       messages:
         invalid: '无效'

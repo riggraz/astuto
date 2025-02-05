@@ -19,8 +19,13 @@ de:
         new_password: 'Neues Passwort'
         new_password_confirmation: 'Neues Passwort bestätigen'
         current_password: 'Aktuelles Passwort'
-        notifications_enabled: 'Benachrichtigungen aktiviert'
+        notifications: 'Notifications'
         notifications_enabled_help: "Wenn deaktiviert, erhältst du keine Benachrichtigungen"
+        recap_notification_frequency_never: 'Never'
+        recap_notification_frequency_daily: 'Daily'
+        recap_notification_frequency_weekly: 'Weekly'
+        recap_notification_frequency_monthly: 'Monthly'
+        recap_notification_frequency_help: 'recap notifications let you know if new feedback has been submitted or is waiting for your approval'
         waiting_confirmation: 'Warte auf Bestätigung von: %{email}'
         no_password_set: 'Sie müssen ein Passwort festlegen, um Ihr Profil zu aktualisieren'
         set_password: 'Passwort festlegen'
@@ -43,6 +48,14 @@ de:
         change_password: 'Passwort ändern'
         password_help: 'Mindestens %{count} Zeichen'
         email_registration_not_allowed: 'Email registration not allowed'
+      api_key:
+        title: 'API key'
+        current_api_key_help: 'You have already generated an API key and, for security reasons, it cannot be shown again. If you lost it, you can generate a new one below.'
+        generate_api_key: 'Generate API key'
+        generated_api_key_help: 'Save this API key in a safe place, as you will not be able to see it again.'
+        generated_api_key_successfully: 'API key generated successfully!'
+        confirm_generate_new_api_key: 'Are you sure you want to generate a new API key? The old one will be invalidated.'
+        api_key_learn_more: 'Learn how to use the API'
     comments_number:
       one: '1 Kommentar'
       other: '%{count} Kommentare'
@@ -58,6 +71,7 @@ de:
     disabled: 'Deaktiviert'
     copied: 'Kopiert!'
     user_staff: 'Mitarbeiter'
+    language_supported: '%{language} supported'
     powered_by: 'Powered by'
     buttons:
       new: 'Neu'
@@ -73,6 +87,7 @@ de:
       approve: 'Freigeben'
       reject: 'Ablehnen'
       copy_to_clipboard: 'Copy to clipboard'
+      preview: 'Preview'
     datetime:
       now: 'gerade eben'
       minutes:
@@ -158,6 +173,7 @@ de:
       not_following_description: "Du erhältst keine Benachrichtigungen zu diesem Beitrag"
     comments:
       title: 'Aktivität'
+      empty: 'There are no comments yet'
       post_update_badge: 'Aktualisierung'
       reply_button: 'Antworten'
     new_comment:
@@ -174,6 +190,7 @@ de:
       boards: 'Boards'
       post_statuses: 'Status'
       roadmap: 'Übersicht'
+      webhooks: 'Webhooks'
       invitations: 'Invitations'
       appearance: 'Erscheinung'
     info_box:
@@ -263,6 +280,7 @@ de:
       accepted: 'Accepted'
       sent_at: 'Sent %{when}'
       accepted_at: 'Accepted %{when}'
+      expired: 'Expired'
     appearance:
       title: 'Erscheinung'
       learn_more: 'Erfahren Sie, wie man das Aussehen anpassen kann'
@@ -291,6 +309,33 @@ de:
         subtitle_oauth_config: 'OAuth-Konfiguration'
         subtitle_user_profile_config: 'Profileinstellungen'
         client_secret_help: 'aus Sicherheitsgründen versteckt'
+    webhooks:
+      title: 'Webhooks'
+      learn_more: 'Learn how to configure and use webhooks'
+      empty: 'There are no webhooks.'
+      triggers:
+        new_post: 'New post'
+        new_post_pending_approval: 'New post (pending approval)'
+        delete_post: 'Delete post'
+        post_status_change: 'Post status change'
+        new_comment: 'New comment'
+        new_vote: 'New vote'
+        new_user: 'New user'
+      http_methods:
+        post: 'POST'
+        put: 'PUT'
+        patch: 'PATCH'
+        delete: 'DELETE'
+      form:
+        title_new: 'New webhook'
+        title_edit: 'Edit webhook'
+        add_header: 'Add header'
+        header_n_key: 'Header %{n} key'
+        header_n_value: 'Header %{n} value'
+        template_variables_selector_placeholder: 'Select a template variable...'
+        preview_error: 'There is an error in your template'
+      test_page:
+        title: 'Webhook test results'
   moderation:
     menu:
       feedback: 'Feedback'

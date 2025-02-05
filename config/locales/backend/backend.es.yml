@@ -2,7 +2,7 @@ es:
   errors:
     unknown: 'Ocurrió un error desconocido'
     unauthorized: 'No estás autorizado'
-    email_domain_not_allowed: 'You cannot register with the provided email address'
+    email_domain_not_allowed: 'No puede registrarse con la dirección de correo electrónico proporcionada'
     not_logged_in: 'Debes iniciar sesión para acceder a esta página'
     not_enough_privileges: 'No tienes suficientes privilegios para acceder a esta página'
     user_blocked_or_deleted: 'No puedes acceder a tu cuenta porque ha sido bloqueada o eliminada.'
@@ -50,6 +50,11 @@ es:
       notify_follower_of_post_status_change:
         subject: '[%{site_name}] Cambio de estado en la publicación "%{post}"'
         body_html: 'Hay una nueva actualización en la publicación que estás siguiendo <b>%{post}</b>'
+      recap:
+        subject: '[%{site_name}] %{frequency} recap of feedback space activity'
+        body_html: 'Here is the %{frequency} recap of activities in your feedback space'
+        published_posts_count_html: 'New published feedback: %{count}'
+        pending_posts_count_html: 'New feedback pending approval: %{count}'
   activerecord:
     models:
       board:
@@ -73,6 +78,9 @@ es:
       user:
         one: 'Usuario'
         other: 'Usuarios'
+      webhook:
+        one: 'Webhook'
+        other: 'Webhooks'
     attributes:
       board:
         name: 'Nombre'
@@ -110,10 +118,10 @@ es:
       post:
         title: 'Título'
         description: 'Descripción'
-        approval_status: 'Approval status'
-        approval_status_approved: 'Approved'
-        approval_status_pending: 'Pending approval'
-        approval_status_rejected: 'Rejected'
+        approval_status: 'Estado de aprobación'
+        approval_status_approved: 'Aprobado'
+        approval_status_pending: 'Pendiente de aprobación'
+        approval_status_rejected: 'Rechazado'
         board_id: 'Tablero de la publicación'
         user_id: 'Autor de la publicación'
         post_status_id: 'Estado de la publicación'
@@ -125,19 +133,19 @@ es:
         custom_domain: 'Dominio personalizado'
       tenant_setting:
         brand_display: 'Visualización'
-        use_browser_locale: 'Use browser language'
-        is_private: 'Private site'
-        email_registration_policy: 'Email registration policy'
-        allowed_email_domains: 'Allowed email domains'
-        allow_anonymous_feedback: 'Allow anonymous feedback'
-        feedback_approval_policy: 'Feedback approval policy'
+        use_browser_locale: 'Usar idioma del navegador'
+        is_private: 'Sitio privado'
+        email_registration_policy: 'Política de registro de correo'
+        allowed_email_domains: 'Dominios de correo electrónico permitidos'
+        allow_anonymous_feedback: 'Permitir comentarios anónimos'
+        feedback_approval_policy: 'Política de aprobación de comentarios'
         show_vote_count: 'Mostrar el número de votos a los usuarios'
         show_vote_button_in_board: 'Mostrar botones de voto en la página del foro'
-        hide_unused_statuses_in_filter_by_status: 'Hide unused statuses in filter by status'
+        hide_unused_statuses_in_filter_by_status: 'Ocultar estados no utilizados en el filtro por estado'
         show_powered_by: 'Mostrar "Powered by Astuto"'
         root_board_id: 'Página raíz'
-        logo_links_to: 'Logo links to'
-        logo_custom_url: 'Logo custom URL'
+        logo_links_to: 'Enlaces del logo a'
+        logo_custom_url: 'URL personalizada Logo'
         show_roadmap_in_header: 'Mostrar enlace de mapa de ruta en el encabezado'
         collapse_boards_in_header: 'Colapsar foros en el encabezado'
         custom_css: 'CSS personalizado'
@@ -148,6 +156,16 @@ es:
         password_confirmation: 'Confirmación de contraseña'
         role: 'Rol'
         notifications_enabled: 'Notificaciones habilitadas'
+        recap_notification_frequency: 'Recap notification frequency'
+      webhook:
+        name: 'Name'
+        description: 'Description'
+        is_enabled: 'Enabled'
+        trigger: 'Trigger'
+        url: 'URL'
+        http_body: 'HTTP request body'
+        http_method: 'HTTP method'
+        http_headers: 'HTTP request headers'
     errors:
       messages:
         invalid: 'no es válido'

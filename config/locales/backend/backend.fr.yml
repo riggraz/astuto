@@ -50,6 +50,11 @@ fr:
       notify_follower_of_post_status_change:
         subject: '[%{site_name}] Statut changé sur le post "%{post}"'
         body_html: 'Il y a une nouvelle mise à jour sur la publication que vous suivez <b>%{post}</b>'
+      recap:
+        subject: '[%{site_name}] %{frequency} recap of feedback space activity'
+        body_html: 'Here is the %{frequency} recap of activities in your feedback space'
+        published_posts_count_html: 'New published feedback: %{count}'
+        pending_posts_count_html: 'New feedback pending approval: %{count}'
   activerecord:
     models:
       board:
@@ -73,6 +78,9 @@ fr:
       user:
         one: 'Utilisateur'
         other: 'Utilisateurs'
+      webhook:
+        one: 'Webhook'
+        other: 'Webhooks'
     attributes:
       board:
         name: 'Nom'
@@ -148,6 +156,16 @@ fr:
         password_confirmation: 'Confirmer le mot de passe'
         role: 'Rôle'
         notifications_enabled: 'Notifications activées'
+        recap_notification_frequency: 'Recap notification frequency'
+      webhook:
+        name: 'Name'
+        description: 'Description'
+        is_enabled: 'Enabled'
+        trigger: 'Trigger'
+        url: 'URL'
+        http_body: 'HTTP request body'
+        http_method: 'HTTP method'
+        http_headers: 'HTTP request headers'
     errors:
       messages:
         invalid: 'est invalide'

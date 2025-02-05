@@ -50,6 +50,11 @@ vi:
       notify_follower_of_post_status_change:
         subject: '[%{site_name}] Status change on post "%{post}"'
         body_html: 'There is a status update on the post you are following <b>%{post}</b>'
+      recap:
+        subject: '[%{site_name}] %{frequency} recap of feedback space activity'
+        body_html: 'Here is the %{frequency} recap of activities in your feedback space'
+        published_posts_count_html: 'New published feedback: %{count}'
+        pending_posts_count_html: 'New feedback pending approval: %{count}'
   activerecord:
     models:
       board:
@@ -66,6 +71,8 @@ vi:
         other: 'Bài viết'
       user:
         other: 'Người dùng'
+      webhook:
+        other: 'Webhooks'
     attributes:
       board:
         name: 'Tên'
@@ -141,6 +148,16 @@ vi:
         password_confirmation: 'Xác nhận mật khẩu'
         role: 'Vai trò'
         notifications_enabled: 'Cho phép thông báo'
+        recap_notification_frequency: 'Recap notification frequency'
+      webhook:
+        name: 'Name'
+        description: 'Description'
+        is_enabled: 'Enabled'
+        trigger: 'Trigger'
+        url: 'URL'
+        http_body: 'HTTP request body'
+        http_method: 'HTTP method'
+        http_headers: 'HTTP request headers'
     errors:
       messages:
         invalid: 'không hợp lệ'

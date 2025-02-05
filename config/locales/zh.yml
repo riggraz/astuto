@@ -19,8 +19,13 @@ zh-CN:
         new_password: '新密码'
         new_password_confirmation: '确认新密码'
         current_password: '当前密码'
-        notifications_enabled: '开启通知'
+        notifications: 'Notifications'
         notifications_enabled_help: "关闭后，您将不会收到任何通知"
+        recap_notification_frequency_never: 'Never'
+        recap_notification_frequency_daily: 'Daily'
+        recap_notification_frequency_weekly: 'Weekly'
+        recap_notification_frequency_monthly: 'Monthly'
+        recap_notification_frequency_help: 'recap notifications let you know if new feedback has been submitted or is waiting for your approval'
         waiting_confirmation: '正在等待验证 %{email}'
         no_password_set: 'You must set a password to update your profile'
         set_password: 'Set password'
@@ -43,6 +48,14 @@ zh-CN:
         change_password: '修改密码'
         password_help: '至少需要 %{count} 个字符'
         email_registration_not_allowed: 'Email registration not allowed'
+      api_key:
+        title: 'API key'
+        current_api_key_help: 'You have already generated an API key and, for security reasons, it cannot be shown again. If you lost it, you can generate a new one below.'
+        generate_api_key: 'Generate API key'
+        generated_api_key_help: 'Save this API key in a safe place, as you will not be able to see it again.'
+        generated_api_key_successfully: 'API key generated successfully!'
+        confirm_generate_new_api_key: 'Are you sure you want to generate a new API key? The old one will be invalidated.'
+        api_key_learn_more: 'Learn how to use the API'
     comments_number:
       other: '%{count} 条评论'
     no_status: '无状态'
@@ -57,6 +70,7 @@ zh-CN:
     disabled: '已禁用'
     copied: '已复制！'
     user_staff: '工作人员'
+    language_supported: '%{language} supported'
     powered_by: '技术支持:'
     buttons:
       new: '新建'
@@ -72,6 +86,7 @@ zh-CN:
       approve: 'Approve'
       reject: 'Reject'
       copy_to_clipboard: 'Copy to clipboard'
+      preview: 'Preview'
     datetime:
       now: '刚刚'
       minutes:
@@ -152,6 +167,7 @@ zh-CN:
       not_following_description: "您不会收到关于此帖的更新的通知"
     comments:
       title: '活动'
+      empty: 'There are no comments yet'
       post_update_badge: '更新'
       reply_button: '回复'
     new_comment:
@@ -168,6 +184,7 @@ zh-CN:
       boards: '网站版块'
       post_statuses: '帖子状态'
       roadmap: '开发路线'
+      webhooks: 'Webhooks'
       invitations: 'Invitations'
       appearance: '外观定制'
     info_box:
@@ -256,6 +273,7 @@ zh-CN:
       accepted: 'Accepted'
       sent_at: 'Sent %{when}'
       accepted_at: 'Accepted %{when}'
+      expired: 'Expired'
     appearance:
       title: '外观定制'
       learn_more: '了解如何自定义外观'
@@ -284,6 +302,33 @@ zh-CN:
         subtitle_oauth_config: 'OAuth 配置'
         subtitle_user_profile_config: '用户资料配置'
         client_secret_help: '出于安全隐藏'
+    webhooks:
+      title: 'Webhooks'
+      learn_more: 'Learn how to configure and use webhooks'
+      empty: 'There are no webhooks.'
+      triggers:
+        new_post: 'New post'
+        new_post_pending_approval: 'New post (pending approval)'
+        delete_post: 'Delete post'
+        post_status_change: 'Post status change'
+        new_comment: 'New comment'
+        new_vote: 'New vote'
+        new_user: 'New user'
+      http_methods:
+        post: 'POST'
+        put: 'PUT'
+        patch: 'PATCH'
+        delete: 'DELETE'
+      form:
+        title_new: 'New webhook'
+        title_edit: 'Edit webhook'
+        add_header: 'Add header'
+        header_n_key: 'Header %{n} key'
+        header_n_value: 'Header %{n} value'
+        template_variables_selector_placeholder: 'Select a template variable...'
+        preview_error: 'There is an error in your template'
+      test_page:
+        title: 'Webhook test results'
   moderation:
     menu:
       feedback: 'Feedback'
