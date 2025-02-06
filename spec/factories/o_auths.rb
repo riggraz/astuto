@@ -1,7 +1,6 @@
 FactoryBot.define do
   factory :o_auth do
     sequence(:name) { |n| "OAuth#{n}" }
-    logo { "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" }
     is_enabled { false }
     client_id { "123456" }
     client_secret { "123456" }
@@ -16,7 +15,6 @@ FactoryBot.define do
   factory :default_o_auth, class: OAuth do
     tenant { nil }
     sequence(:name) { |n| "DefaultOAuth#{n}" }
-    logo { "https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" }
     is_enabled { false }
     client_id { "123456" }
     client_secret { "123456" }

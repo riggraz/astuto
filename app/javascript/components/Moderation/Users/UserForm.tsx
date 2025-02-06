@@ -1,10 +1,10 @@
 import * as React from 'react';
-import Gravatar from 'react-gravatar';
 import I18n from 'i18n-js';
 
 import Button from '../../common/Button';
 import IUser, { UserRoles, USER_ROLE_ADMIN, USER_ROLE_MODERATOR, USER_ROLE_USER } from '../../../interfaces/IUser';
 import { getLabel } from '../../../helpers/formUtils';
+import Avatar from '../../common/Avatar';
 
 interface Props {
   user: IUser;
@@ -44,7 +44,7 @@ class UserForm extends React.Component<Props, State> {
 
     return (
       <div className="userForm">
-        <Gravatar email={user.email} size={42} className="gravatar userGravatar" />
+        <Avatar avatarUrl={user.avatarUrl} email={user.email} size={42} customClass="userAvatar" />
 
         <div className="userFullNameRoleForm">
           <span className="userFullName">{ user.fullName }</span>

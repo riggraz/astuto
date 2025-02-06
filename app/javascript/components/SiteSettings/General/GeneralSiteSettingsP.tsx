@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import I18n from 'i18n-js';
 
 import Box from '../../common/Box';
@@ -21,11 +21,16 @@ import { DangerText, SmallMutedText } from '../../common/CustomTexts';
 import { getLabel, getValidationMessage } from '../../../helpers/formUtils';
 import IBoardJSON from '../../../interfaces/json/IBoard';
 import ActionLink from '../../common/ActionLink';
-import { LearnMoreIcon } from '../../common/Icons';
+import { CancelIcon, DeleteIcon, EditIcon, LearnMoreIcon } from '../../common/Icons';
+import Dropzone from '../../common/Dropzone';
 
 export interface ISiteSettingsGeneralForm {
   siteName: string;
-  siteLogo: string;
+  siteLogo?: File;
+  shouldDeleteSiteLogo: boolean;
+  oldSiteLogo: string;
+  siteFavicon?: File;
+  shouldDeleteSiteFavicon: boolean;
   brandDisplaySetting: string;
   locale: string;
   useBrowserLocale: boolean;
@@ -34,6 +39,7 @@ export interface ISiteSettingsGeneralForm {
   isPrivate: boolean;
   allowAnonymousFeedback: boolean;
   feedbackApprovalPolicy: string;
+  allowAttachmentUpload: boolean;
   logoLinksTo: string;
   logoCustomUrl?: string;
   showRoadmapInHeader: boolean;
@@ -46,6 +52,8 @@ export interface ISiteSettingsGeneralForm {
 
 interface Props {
   originForm: ISiteSettingsGeneralForm;
+  siteLogoUrl?: string;
+  siteFaviconUrl?: string;
   boards: IBoardJSON[];
   isMultiTenant: boolean;
   authenticityToken: string;
@@ -55,7 +63,11 @@ interface Props {
 
   updateTenant(
     siteName: string,
-    siteLogo: string,
+    siteLogo: File,
+    shouldDeleteSiteLogo: boolean,
+    oldSiteLogo: string,
+    siteFavicon: File,
+    shouldDeleteSiteFavicon: boolean,
     brandDisplaySetting: string,
     locale: string,
     useBrowserLocale: boolean,
@@ -64,6 +76,7 @@ interface Props {
     isPrivate: boolean,
     allowAnonymousFeedback: boolean,
     feedbackApprovalPolicy: string,
+    allowAttachmentUpload: boolean,
     logoLinksTo: string,
     logoCustomUrl: string,
     showRoadmapInHeader: boolean,
@@ -78,6 +91,8 @@ interface Props {
 
 const GeneralSiteSettingsP = ({
   originForm,
+  siteLogoUrl,
+  siteFaviconUrl,
   boards,
   isMultiTenant,
   authenticityToken,
@@ -91,10 +106,15 @@ const GeneralSiteSettingsP = ({
     handleSubmit,
     formState: { isDirty, isSubmitSuccessful, errors },
     watch,
+    control,
   } = useForm<ISiteSettingsGeneralForm>({
     defaultValues: {
       siteName: originForm.siteName,
-      siteLogo: originForm.siteLogo,
+      siteLogo: null,
+      shouldDeleteSiteLogo: false,
+      oldSiteLogo: originForm.oldSiteLogo,
+      siteFavicon: null,
+      shouldDeleteSiteFavicon: false,
       brandDisplaySetting: originForm.brandDisplaySetting,
       locale: originForm.locale,
       useBrowserLocale: originForm.useBrowserLocale,
@@ -103,6 +123,7 @@ const GeneralSiteSettingsP = ({
       isPrivate: originForm.isPrivate,
       allowAnonymousFeedback: originForm.allowAnonymousFeedback,
       feedbackApprovalPolicy: originForm.feedbackApprovalPolicy,
+      allowAttachmentUpload: originForm.allowAttachmentUpload,
       logoLinksTo: originForm.logoLinksTo,
       logoCustomUrl: originForm.logoCustomUrl,
       showRoadmapInHeader: originForm.showRoadmapInHeader,
@@ -117,7 +138,11 @@ const GeneralSiteSettingsP = ({
   const onSubmit: SubmitHandler<ISiteSettingsGeneralForm> = data => {
     updateTenant(
       data.siteName,
-      data.siteLogo,
+      data.siteLogo ? data.siteLogo : null,
+      data.shouldDeleteSiteLogo,
+      data.oldSiteLogo,
+      data.siteFavicon ? data.siteFavicon : null,
+      data.shouldDeleteSiteFavicon,
       data.brandDisplaySetting,
       data.locale,
       data.useBrowserLocale,
@@ -126,6 +151,7 @@ const GeneralSiteSettingsP = ({
       data.isPrivate,
       data.allowAnonymousFeedback,
       data.feedbackApprovalPolicy,
+      data.allowAttachmentUpload,
       data.logoLinksTo,
       data.logoCustomUrl,
       data.showRoadmapInHeader,
@@ -144,8 +170,6 @@ const GeneralSiteSettingsP = ({
     });
   };
 
-  const customDomain = watch('customDomain');
-
   React.useEffect(() => {
     if (window.location.hash) {
       const anchor = window.location.hash.substring(1);
@@ -163,6 +187,13 @@ const GeneralSiteSettingsP = ({
     }
   }, []);
 
+  const customDomain = watch('customDomain');
+  const shouldDeleteSiteLogo = watch('shouldDeleteSiteLogo');
+  const shouldDeleteSiteFavicon = watch('shouldDeleteSiteFavicon');
+
+  const [showSiteLogoDropzone, setShowSiteLogoDropzone] = React.useState([null, undefined, ''].includes(siteLogoUrl));
+  const [showSiteFaviconDropzone, setShowSiteFaviconDropzone] = React.useState([null, undefined, ''].includes(siteFaviconUrl));
+
   return (
     <>
       <Box customClass="generalSiteSettingsContainer">
@@ -170,7 +201,7 @@ const GeneralSiteSettingsP = ({
 
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="formRow">
-            <div className="formGroup col-4">
+            <div className="formGroup col-6">
               <label htmlFor="siteName">{ getLabel('tenant', 'site_name') }</label>
               <input
                 {...register('siteName', { required: true })}
@@ -180,17 +211,7 @@ const GeneralSiteSettingsP = ({
               <DangerText>{errors.siteName && getValidationMessage(errors.siteName.type, 'tenant', 'site_name')}</DangerText>
             </div>
 
-            <div className="formGroup col-4">
-              <label htmlFor="siteLogo">{ getLabel('tenant', 'site_logo') }</label>
-              <input
-                {...register('siteLogo')}
-                placeholder='https://example.com/logo.png'
-                id="siteLogo"
-                className="formControl"
-              />
-            </div>
-
-            <div className="formGroup col-4">
+            <div className="formGroup col-6">
               <label htmlFor="brandSetting">{ getLabel('tenant_setting', 'brand_display') }</label>
               <select
                 {...register('brandDisplaySetting')}
@@ -210,6 +231,177 @@ const GeneralSiteSettingsP = ({
                   { I18n.t('site_settings.general.brand_setting_none') }
                 </option>
               </select>
+            </div>
+
+            {/* Hidden oldSiteLogo field for backwards compatibility */}
+            <div className="formGroup d-none">
+              <label htmlFor="oldSiteLogo">{ getLabel('tenant', 'site_logo') }</label>
+              <input
+                {...register('oldSiteLogo')}
+                placeholder='https://example.com/logo.png'
+                id="oldSiteLogo"
+                className="formControl"
+              />
+            </div>
+          </div>
+
+          <div className="formRow">
+            <div className="formGroup col-6">
+              <label htmlFor="siteLogo">{ getLabel('tenant', 'site_logo') }</label>
+
+              {
+                siteLogoUrl &&
+                  <div className={`siteLogoPreview${shouldDeleteSiteLogo ? ' siteLogoPreviewShouldDelete' : ''}`}>
+                    <img src={siteLogoUrl} alt={`${originForm.siteName} logo`} className="siteLogoPreviewImg" />
+                  </div>
+              }
+
+              <div className="siteLogoActions">
+              {
+                (siteLogoUrl && !shouldDeleteSiteLogo) &&
+                  (showSiteLogoDropzone ?
+                    <ActionLink
+                      onClick={() => setShowSiteLogoDropzone(false)}
+                      icon={<CancelIcon />}
+                    >
+                      {I18n.t('common.buttons.cancel')}
+                    </ActionLink>
+                  :
+                    <ActionLink
+                      onClick={() => setShowSiteLogoDropzone(true)}
+                      icon={<EditIcon />}
+                    >
+                      {I18n.t('common.buttons.edit')}
+                    </ActionLink>)
+              }
+
+              {
+                (siteLogoUrl && !showSiteLogoDropzone) &&
+                  (shouldDeleteSiteLogo ?
+                    <Controller
+                      name="shouldDeleteSiteLogo"
+                      control={control}
+                      render={({ field }) => (
+                        <ActionLink
+                          onClick={() => field.onChange(false)}
+                          icon={<CancelIcon />}
+                        >
+                          {I18n.t('common.buttons.cancel')}
+                        </ActionLink>
+                      )}
+                    />
+                  :
+                    <Controller
+                      name="shouldDeleteSiteLogo"
+                      control={control}
+                      render={({ field }) => (
+                        <ActionLink
+                          onClick={() => field.onChange(true)}
+                          icon={<DeleteIcon />}
+                        >
+                          {I18n.t('common.buttons.delete')}
+                        </ActionLink>
+                      )}
+                    />
+                  )
+              }
+              </div>
+              
+              {
+                showSiteLogoDropzone &&
+                  <Controller
+                    name="siteLogo"
+                    control={control}
+                    render={({ field }) => (
+                      <Dropzone
+                        files={field.value ? [field.value] : []}
+                        setFiles={files => files.length > 0 ? field.onChange(files[0]) : field.onChange(null)}
+                        maxSizeKB={256}
+                        maxFiles={1}
+                      />
+                    )}
+                  />
+              }
+            </div>
+
+            <div className="formGroup col-6">
+              <label htmlFor="siteFavicon">{ getLabel('tenant', 'site_favicon') }</label>
+              
+              {
+                siteFaviconUrl &&
+                  <div className={`siteFaviconPreview${shouldDeleteSiteFavicon ? ' siteFaviconPreviewShouldDelete' : ''}`}>
+                    <img src={siteFaviconUrl} alt={`${originForm.siteName} favicon`} className="siteFaviconPreviewImg" />
+                  </div>
+              }
+
+              <div className="siteFaviconActions">
+              {
+                (siteFaviconUrl && !shouldDeleteSiteFavicon) &&
+                  (showSiteFaviconDropzone ?
+                    <ActionLink
+                      onClick={() => setShowSiteFaviconDropzone(false)}
+                      icon={<CancelIcon />}
+                    >
+                      {I18n.t('common.buttons.cancel')}
+                    </ActionLink>
+                  :
+                    <ActionLink
+                      onClick={() => setShowSiteFaviconDropzone(true)}
+                      icon={<EditIcon />}
+                    >
+                      {I18n.t('common.buttons.edit')}
+                    </ActionLink>)
+              }
+
+              {
+                (siteFaviconUrl && !showSiteFaviconDropzone) &&
+                  (shouldDeleteSiteFavicon ?
+                    <Controller
+                      name="shouldDeleteSiteFavicon"
+                      control={control}
+                      render={({ field }) => (
+                        <ActionLink
+                          onClick={() => field.onChange(false)}
+                          icon={<CancelIcon />}
+                        >
+                          {I18n.t('common.buttons.cancel')}
+                        </ActionLink>
+                      )}
+                    />
+                  :
+                    <Controller
+                      name="shouldDeleteSiteFavicon"
+                      control={control}
+                      render={({ field }) => (
+                        <ActionLink
+                          onClick={() => field.onChange(true)}
+                          icon={<DeleteIcon />}
+                        >
+                          {I18n.t('common.buttons.delete')}
+                        </ActionLink>
+                      )}
+                    />
+                  )
+              }
+
+              </div>
+
+              {
+                showSiteFaviconDropzone &&
+                  <Controller
+                    name="siteFavicon"
+                    control={control}
+                    render={({ field }) => (
+                      <Dropzone
+                        files={field.value ? [field.value] : []}
+                        setFiles={files => files.length > 0 ? field.onChange(files[0]) : field.onChange(null)}
+                        maxSizeKB={64}
+                        maxFiles={1}
+                        accept={['image/x-icon', 'image/icon', 'image/png', 'image/jpeg', 'image/jpg']}
+                      />
+                    )}
+                  />
+              }
             </div>
           </div>
 
@@ -334,6 +526,16 @@ const GeneralSiteSettingsP = ({
               <SmallMutedText>
                 { I18n.t('site_settings.general.feedback_approval_policy_help') }
               </SmallMutedText>
+            </div>
+
+            <div className="formGroup">
+              <div className="checkboxSwitch">
+                <input {...register('allowAttachmentUpload')} type="checkbox" id="allow_attachment_upload" />
+                <label htmlFor="allow_attachment_upload">{ getLabel('tenant_setting', 'allow_attachment_upload') }</label>
+                <SmallMutedText>
+                  { I18n.t('site_settings.general.allow_attachment_upload_help') }
+                </SmallMutedText>
+              </div>
             </div>
           </div>
 

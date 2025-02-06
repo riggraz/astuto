@@ -1,17 +1,17 @@
 class CommentPolicy < ApplicationPolicy
   def permitted_attributes_for_create
     if user.moderator?
-      [:body, :parent_id, :is_post_update]
+      [:body, :parent_id, :is_post_update, :attachments]
     else
-      [:body, :parent_id]
+      [:body, :parent_id, :attachments]
     end
   end
 
   def permitted_attributes_for_update
     if user.moderator?
-      [:body, :is_post_update]
+      [:body, :is_post_update, :attachments]
     else
-      [:body]
+      [:body, :attachments]
     end
   end
 

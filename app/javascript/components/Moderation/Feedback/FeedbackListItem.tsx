@@ -1,11 +1,11 @@
 import React from 'react';
 import I18n from 'i18n-js';
-import Gravatar from 'react-gravatar';
 
 import IPost, { PostApprovalStatus } from '../../../interfaces/IPost';
 import { AnonymousIcon, ApproveIcon, RejectIcon } from '../../common/Icons';
 import ReactMarkdown from 'react-markdown';
 import ActionLink from '../../common/ActionLink';
+import Avatar from '../../common/Avatar';
 
 interface Props {
   post: IPost;
@@ -25,7 +25,7 @@ const FeedbackListItem = ({ post, onUpdatePostApprovalStatus, hideRejectButton }
         <div className="feedbackListItemIcon">
           {
             post.userId ?
-              <Gravatar email={post.userEmail} size={42} title={post.userEmail} className="gravatar userGravatar" />
+              <Avatar avatarUrl={post.userAvatar} email={post.userEmail} size={42} customClass="userAvatar" />
             :
               <AnonymousIcon size={42} />
           }

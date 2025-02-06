@@ -1,7 +1,7 @@
 interface ITenant {
   id: number;
   siteName: string;
-  siteLogo: string;
+  oldSiteLogo: string;
   locale: string;
   customDomain?: string;
 }

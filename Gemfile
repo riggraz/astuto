@@ -70,6 +70,12 @@ gem 'sidekiq-cron', '2.0.1'
 # Template language
 gem 'liquid', '5.5.1'
 
+# S3 for ActiveStorage
+gem 'aws-sdk-s3', '1.176.1', require: false
+
+# ActiveStorage validation
+gem 'active_storage_validations', '1.4'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   

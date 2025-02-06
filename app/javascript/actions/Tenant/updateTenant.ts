@@ -2,10 +2,10 @@ import { Action } from "redux";
 import { ThunkAction } from "redux-thunk";
 
 import HttpStatus from "../../constants/http_status";
-import buildRequestHeaders from "../../helpers/buildRequestHeaders";
 import ITenantSetting from "../../interfaces/ITenantSetting";
 import ITenantJSON from "../../interfaces/json/ITenant";
 import { State } from "../../reducers/rootReducer";
+import buildFormData from "../../helpers/buildFormData";
 
 export const TENANT_UPDATE_START = 'TENANT_UPDATE_START';
 interface TenantUpdateStartAction {
@@ -47,7 +47,11 @@ const tenantUpdateFailure = (error: string): TenantUpdateFailureAction => ({
 
 interface UpdateTenantParams {
   siteName?: string;
-  siteLogo?: string;
+  siteLogo?: File;
+  shouldDeleteSiteLogo?: boolean;
+  oldSiteLogo?: string;
+  siteFavicon?: File;
+  shouldDeleteSiteFavicon?: boolean;
   tenantSetting?: ITenantSetting;
   locale?: string;
   customDomain?: string;
@@ -57,6 +61,10 @@ interface UpdateTenantParams {
 export const updateTenant = ({
   siteName = null,
   siteLogo = null,
+  shouldDeleteSiteLogo = null,
+  oldSiteLogo = null,
+  siteFavicon = null,
+  shouldDeleteSiteFavicon = null,
   tenantSetting = null,
   locale = null,
   customDomain = null,
@@ -64,24 +72,32 @@ export const updateTenant = ({
 }: UpdateTenantParams): ThunkAction<void, State, null, Action<string>> => async (dispatch) => {
   dispatch(tenantUpdateStart());
 
-  const tenant = Object.assign({},
-    siteName !== null ? { site_name: siteName } : null,
-    siteLogo !== null ? { site_logo: siteLogo } : null,
-    locale !== null ? { locale } : null,
-    customDomain !== null ? { custom_domain: customDomain } : null,
-  );
-
   try {
-    const body = JSON.stringify({
-      tenant: {
-        ...tenant,
-        tenant_setting_attributes: tenantSetting,
-      },
-    });
+    let formDataObj = {
+      'tenant[site_name]': siteName,
+      'tenant[site_logo]': siteLogo,
+      'tenant[should_delete_site_logo]': shouldDeleteSiteLogo.toString(),
+      'tenant[old_site_logo]': oldSiteLogo,
+      'tenant[site_favicon]': siteFavicon,
+      'tenant[should_delete_site_favicon]': shouldDeleteSiteFavicon.toString(),
+      'tenant[locale]': locale,
+      'tenant[custom_domain]': customDomain,
+    }
+
+    if (tenantSetting) {
+      Object.entries(tenantSetting).forEach(([key, value]) => {
+        formDataObj[`tenant[tenant_setting_attributes][${key}]`] = value;
+      });
+    }
+    
+    const body = buildFormData(formDataObj);
 
     const res = await fetch(`/tenants/0`, {
       method: 'PATCH',
-      headers: buildRequestHeaders(authenticityToken),
+      headers: {
+        'X-CSRF-Token': authenticityToken,
+        // do not set Content-Type header when using FormData
+      },
       body,
     });
     const json = await res.json();

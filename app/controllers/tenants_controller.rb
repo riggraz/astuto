@@ -11,7 +11,11 @@ class TenantsController < ApplicationController
   end
 
   def show
-    render json: Current.tenant_or_raise!
+    tenant = Current.tenant_or_raise!
+
+    tenant.attributes.merge(site_logo_url: tenant.site_logo.attached? ? tenant.site_logo.blob.url : nil)
+
+    render json: tenant
   end
 
   def create
@@ -92,7 +96,27 @@ class TenantsController < ApplicationController
     # to avoid unique constraint violation
     params[:tenant][:custom_domain] = nil if params[:tenant][:custom_domain].blank?
 
-    if @tenant.update(tenant_update_params)
+    # Handle site logo attachment
+    if params[:tenant][:should_delete_site_logo] == "true"
+      @tenant.site_logo.purge if @tenant.site_logo.attached?
+    elsif params[:tenant][:site_logo].present?
+      @tenant.site_logo.purge if @tenant.site_logo.attached?
+      @tenant.site_logo.attach(params[:tenant][:site_logo])
+      should_delete_old_site_logo = true
+    end
+
+    # Handle site favicon attachment
+    if params[:tenant][:should_delete_site_favicon] == "true"
+      @tenant.site_favicon.purge if @tenant.site_favicon.attached?
+    elsif params[:tenant][:site_favicon].present?
+      @tenant.site_favicon.purge if @tenant.site_favicon.attached?
+      @tenant.site_favicon.attach(params[:tenant][:site_favicon])
+    end
+
+    @tenant.assign_attributes(tenant_update_params)
+    @tenant.old_site_logo = nil if should_delete_old_site_logo
+
+    if @tenant.save
       render json: @tenant
     else
       render json: {
@@ -128,7 +152,8 @@ class TenantsController < ApplicationController
           policy(@tenant)
           .permitted_attributes_for_update
           .concat([{
-            tenant_setting_attributes: policy(@tenant.tenant_setting).permitted_attributes_for_update
+            tenant_setting_attributes: policy(@tenant.tenant_setting).permitted_attributes_for_update,
+            additional_params: [:should_delete_site_logo, :should_delete_site_favicon]
           }]) # in order to permit nested attributes for tenant_setting
         )
     end

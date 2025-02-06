@@ -15,6 +15,8 @@ const initialState: IPost = {
   title: '',
   slug: null,
   description: null,
+  attachmentUrls: [],
+  hasAttachments: false,
   approvalStatus: POST_APPROVAL_STATUS_APPROVED,
   boardId: 0,
   postStatusId: null,
@@ -25,6 +27,7 @@ const initialState: IPost = {
   userId: 0,
   userEmail: '',
   userFullName: '',
+  userAvatar: '',
   createdAt: '',
 };
 
@@ -41,6 +44,8 @@ const postReducer = (
         title: action.post.title,
         slug: action.post.slug,
         description: action.post.description,
+        attachmentUrls: action.post.attachment_urls,
+        hasAttachments: action.post.has_attachments,
         approvalStatus: action.post.approval_status,
         boardId: action.post.board_id,
         postStatusId: action.post.post_status_id,
@@ -51,6 +56,7 @@ const postReducer = (
         userId: action.post.user_id,
         userEmail: action.post.user_email,
         userFullName: action.post.user_full_name,
+        userAvatar: action.post.user_avatar,
         createdAt: action.post.created_at,
       };
 
@@ -59,6 +65,7 @@ const postReducer = (
         ...state,
         title: action.post.title,
         description: action.post.description,
+        attachmentUrls: action.post.attachment_urls,
         boardId: action.post.board_id,
         postStatusId: action.post.post_status_id,
         approvalStatus: action.post.approval_status,

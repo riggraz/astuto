@@ -19,8 +19,8 @@ RSpec.describe PostPolicy do
       it { should permit(:update) }
       it { should permit(:destroy) }
 
-      it 'permits "title" and "description" attributes' do
-        expect(subject.permitted_attributes_for_update).to eq([:title, :description])
+      it 'permits "title", "description" and "attachments" attributes' do
+        expect(subject.permitted_attributes_for_update).to eq([:title, :description, :attachments])
       end
     end
   end
@@ -31,8 +31,8 @@ RSpec.describe PostPolicy do
     it { should permit(:update) }
     it { should permit(:destroy) }
 
-    it 'permits "title", "description", "board_id", "post_status_id" and "approval_status" attributes' do
-      permitted_attributes = [:title, :description, :board_id, :post_status_id, :approval_status]
+    it 'permits "title", "description", "board_id", "post_status_id", "attachments", and "approval_status" attributes' do
+      permitted_attributes = [:title, :description, :board_id, :post_status_id, :attachments, :approval_status]
       expect(subject.permitted_attributes_for_update).to eq(permitted_attributes)
     end
   end

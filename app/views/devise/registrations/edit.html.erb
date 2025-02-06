@@ -27,6 +27,32 @@
     <%= f.email_field :email, autocomplete: "email", class: "form-control" %>
   </div>
 
+  <div class="form-group">
+    <%= f.label :avatar, t('common.forms.auth.avatar') %>
+
+    <p>
+      <% if resource.avatar.attached? %>
+        <%= image_tag resource.avatar.blob.url, class: 'avatar', size: 48 %>
+
+        <%=
+          react_component(
+            'UserProfile/DeleteAvatarButton',
+            {
+              deleteAvatarEndpoint: delete_avatar_path,
+              userProfileUrl: edit_user_registration_path,
+              authenticityToken: form_authenticity_token
+            }
+          )
+        %>
+
+      <% else %>
+        <%= image_tag current_user.gravatar_url, class: 'avatar', size: 48 %>
+      <% end %>
+    </p>
+
+    <%= f.file_field :avatar %>
+  </div>
+
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>
       <b><%= t('common.forms.auth.waiting_confirmation', email: resource.unconfirmed_email) %></b>

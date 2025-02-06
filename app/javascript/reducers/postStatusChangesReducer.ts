@@ -44,6 +44,7 @@ const postStatusChangesReducer = (
           postStatusId: postStatusChange.post_status_id,
           userFullName: postStatusChange.user_full_name,
           userEmail: postStatusChange.user_email,
+          userAvatar: postStatusChange.user_avatar,
           createdAt: postStatusChange.created_at,
         })),
         areLoading: false,

@@ -77,6 +77,13 @@ class RegistrationsController < Devise::RegistrationsController
     respond_with_navigational(resource){ redirect_to after_sign_out_path_for(resource_name) }
   end
 
+  def delete_avatar
+    user = User.find(current_user.id)
+    user.avatar.purge
+
+    render json: { success: true }, status: :ok
+  end
+
   def send_set_password_instructions
     user = User.find_by_email(params[:email])
     

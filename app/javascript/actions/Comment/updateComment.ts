@@ -5,6 +5,7 @@ import HttpStatus from "../../constants/http_status";
 import buildRequestHeaders from "../../helpers/buildRequestHeaders";
 import ICommentJSON from "../../interfaces/json/IComment";
 import { State } from "../../reducers/rootReducer";
+import buildFormData from "../../helpers/buildFormData";
 
 export const COMMENT_UPDATE_START = 'COMMENT_UPDATE_START';
 interface CommentUpdateStartAction {
@@ -49,20 +50,25 @@ export const updateComment = (
   commentId: number,
   body: string,
   isPostUpdate: boolean,
+  attachmentsToDelete: number[],
+  attachments: File[],
   authenticityToken: string,
 ): ThunkAction<void, State, null, Action<string>> => async (dispatch) => {
   dispatch(commentUpdateStart());
 
   try {
+    let formDataObj = {
+      'comment[body]': body,
+      'comment[is_post_update]': isPostUpdate,
+      'comment[attachments_to_delete][]': attachmentsToDelete,
+      'comment[attachments][]': attachments,
+    };
+    const requestBody = buildFormData(formDataObj);
+
     const res = await fetch(`/posts/${postId}/comments/${commentId}`, {
       method: 'PATCH',
-      headers: buildRequestHeaders(authenticityToken),
-      body: JSON.stringify({
-        comment: {
-          body,
-          is_post_update: isPostUpdate,
-        },
-      }),
+      headers: { 'X-CSRF-Token': authenticityToken },
+      body: requestBody,
     });
     const json = await res.json();
 

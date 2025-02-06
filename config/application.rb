@@ -40,6 +40,10 @@ module App
       15
     end
 
+    def accepted_image_types
+      %w[image/png image/jpg image/jpeg image/x-icon image/icon image/svg+xml image/svg image/webp]
+    end
+
     def trial_period_days
       ENV.key?("TRIAL_PERIOD_DAYS") ? ENV["TRIAL_PERIOD_DAYS"].to_i.days : 7.days
     end

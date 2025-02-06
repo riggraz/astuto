@@ -4,6 +4,7 @@ import Comment from './Comment';
 
 import IComment from '../../interfaces/IComment';
 import { ReplyFormState } from '../../reducers/replyFormReducer';
+import ITenantSetting from '../../interfaces/ITenantSetting';
 
 interface Props {
   comments: Array<IComment>;
@@ -14,13 +15,15 @@ interface Props {
   toggleCommentReply(commentId: number): void;
   setCommentReplyBody(commentId: number, body: string): void;
 
-  handleSubmitComment(body: string, parentId: number, isPostUpdate: boolean): void;
-  handleUpdateComment(commentId: number, body: string, isPostUpdate: boolean, onSuccess: Function): void;
+  handleSubmitComment(body: string, parentId: number, isPostUpdate: boolean, attachments: File[], onSuccess: Function): void;
+  handleUpdateComment(commentId: number, body: string, isPostUpdate: boolean, attachmentsToDelete: number[], attachments: File[], onSuccess: Function): void;
   handleDeleteComment(id: number): void;
 
+  tenantSetting: ITenantSetting;
   isLoggedIn: boolean;
   isPowerUser: boolean;
   userEmail: string;
+  userAvatar?: string;
 }
 
 const CommentList = ({
@@ -35,9 +38,11 @@ const CommentList = ({
   handleUpdateComment,
   handleDeleteComment,
 
+  tenantSetting,
   isLoggedIn,
   isPowerUser,
   userEmail,
+  userAvatar,
 }: Props) => (
   <>
     {comments.map((comment, i) => {
@@ -59,9 +64,11 @@ const CommentList = ({
 
               {...comment}
 
+              tenantSetting={tenantSetting}
               isLoggedIn={isLoggedIn}
               isPowerUser={isPowerUser}
               currentUserEmail={userEmail}
+              currentUserAvatar={userAvatar}
             />
 
             <CommentList
@@ -77,9 +84,11 @@ const CommentList = ({
               handleUpdateComment={handleUpdateComment}
               handleDeleteComment={handleDeleteComment}
 
+              tenantSetting={tenantSetting}
               isLoggedIn={isLoggedIn}
               isPowerUser={isPowerUser}
               userEmail={userEmail}
+              userAvatar={userAvatar}
             />
           </div>
         );

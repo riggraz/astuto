@@ -1,6 +1,5 @@
 import * as React from 'react';
 import I18n from 'i18n-js';
-import Gravatar from 'react-gravatar';
 
 import ILike from '../../interfaces/ILike';
 import Spinner from '../common/Spinner';
@@ -9,6 +8,7 @@ import {
   DangerText,
   CenteredMutedText
 } from '../common/CustomTexts';
+import Avatar from '../common/Avatar';
 
 interface Props {
   likes: Array<ILike>;
@@ -26,7 +26,8 @@ const LikeList = ({ likes, areLoading, error}: Props) => (
       {
         likes.map((like, i) => (
           <div className="likeListItem" key={i}>
-            <Gravatar email={like.email} size={32} className="gravatar" />
+            <Avatar avatarUrl={like.userAvatar} email={like.email} size={32} />
+            
             <div className="likeListItemUserInfo">
               <span className="likeListItemName" title={like.fullName}>{like.fullName}</span>
               <span className="likeListItemEmail" title={like.email}>{like.email}</span>

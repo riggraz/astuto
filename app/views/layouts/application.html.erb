@@ -14,7 +14,7 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-    <%= favicon_link_tag asset_path('favicon.png') %>
+    <%= favicon_link_tag @tenant.site_favicon.attached? ? @tenant.site_favicon.blob.url : asset_path('favicon.png') %>
   </head>
 
   <body>

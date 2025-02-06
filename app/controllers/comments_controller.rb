@@ -11,6 +11,7 @@ class CommentsController < ApplicationController
         :is_post_update,
         :created_at,
         :updated_at,
+        'users.id as user_id', # required for avatar_url
         'users.full_name as user_full_name',
         'users.email as user_email',
         'users.role as user_role',
@@ -18,6 +19,17 @@ class CommentsController < ApplicationController
       .where(post_id: params[:post_id])
       .left_outer_joins(:user)
       .order(created_at: :desc)
+      .includes(user: { avatar_attachment: :blob }) # Preload avatars
+
+    comments = comments.map do |comment|
+      user_avatar_url = comment.user.avatar.attached? ? comment.user.avatar.blob.url : nil
+      attachment_urls = comment.attachments.order(:created_at).map { |attachment| attachment.blob.url }
+
+      comment.attributes.merge(
+        attachment_urls: attachment_urls,
+        user_avatar: user_avatar_url
+      )
+    end
 
     render json: comments
   end
@@ -26,11 +38,22 @@ class CommentsController < ApplicationController
     @comment = Comment.new
     @comment.assign_attributes(comment_create_params)
 
+    # handle attachments
+    if Current.tenant.tenant_setting.allow_attachment_upload && params[:comment][:attachments].present?
+      @comment.attachments.attach(params[:comment][:attachments])
+    end
+
     if @comment.save
       SendNotificationForCommentWorkflow.new(comment: @comment).run
 
       render json: @comment.attributes.merge(
-        { user_full_name: current_user.full_name, user_email: current_user.email, user_role: current_user.role_before_type_cast }
+        {
+          attachment_urls: @comment.attachments.order(:created_at).map { |attachment| attachment.blob.url },
+          user_full_name: current_user.full_name,
+          user_email: current_user.email,
+          user_avatar: current_user.avatar.attached? ? current_user.avatar.blob.url : nil,
+          user_role: current_user.role_before_type_cast
+        }
       ), status: :created
     else
       render json: {
@@ -43,9 +66,29 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
     authorize @comment
 
-    if @comment.update(comment_update_params)
+    @comment.assign_attributes(comment_update_params)
+
+    # handle attachment deletion
+    if params[:comment][:attachments_to_delete].present? && @comment.attachments.attached?
+      @comment.attachments.order(:created_at).each_with_index do |attachment, index|
+        attachment.purge if params[:comment][:attachments_to_delete].include?(index.to_s)
+      end
+    end
+
+    # handle attachments
+    if Current.tenant.tenant_setting.allow_attachment_upload && params[:comment][:attachments].present?
+      @comment.attachments.attach(params[:comment][:attachments])
+    end
+
+    if @comment.save
       render json: @comment.attributes.merge(
-        { user_full_name: @comment.user.full_name, user_email: @comment.user.email, user_role: @comment.user.role_before_type_cast }
+        {
+          attachment_urls: @comment.attachments.order(:created_at).map { |attachment| attachment.blob.url },
+          user_full_name: @comment.user.full_name,
+          user_email: @comment.user.email,
+          user_avatar: @comment.user.avatar.attached? ? @comment.user.avatar.blob.url : nil,
+          user_role: @comment.user.role_before_type_cast
+        }
       )
     else
       render json: {

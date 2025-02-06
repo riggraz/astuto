@@ -16,8 +16,8 @@ interface Props {
   oAuths: OAuthsState;
 
   requestOAuths(): void;
-  onSubmitOAuth(oAuth: IOAuth, authenticityToken: string): Promise<any>;
-  onUpdateOAuth(id: number, form: ISiteSettingsOAuthForm, authenticityToken: string): Promise<any>;
+  onSubmitOAuth(oAuth: IOAuth, oAuthLogo: File, authenticityToken: string): Promise<any>;
+  onUpdateOAuth(id: number, form: ISiteSettingsOAuthForm, shouldDeleteLogo: boolean, authenticityToken: string): Promise<any>;
   onToggleEnabledOAuth(id: number, isEnabled: boolean, authenticityToken: string): void;
   onToggleEnabledDefaultOAuth(id: number, isEnabled: boolean, authenticityToken: string): void;
   onDeleteOAuth(id: number, authenticityToken: string): void;
@@ -50,14 +50,14 @@ const AuthenticationSiteSettingsP = ({
 
   useEffect(requestOAuths, []);
 
-  const handleSubmitOAuth = (oAuth: IOAuth) => {
-    onSubmitOAuth(oAuth, authenticityToken).then(res => {
+  const handleSubmitOAuth = (oAuth: IOAuth, oAuthLogo: File) => {
+    onSubmitOAuth(oAuth, oAuthLogo, authenticityToken).then(res => {
       if (res?.status === HttpStatus.Created) setPage('index');
     });
   };
 
-  const handleUpdateOAuth = (id: number, form: ISiteSettingsOAuthForm) => {
-    onUpdateOAuth(id, form, authenticityToken).then(res => {
+  const handleUpdateOAuth = (id: number, form: ISiteSettingsOAuthForm, shouldDeleteLogo: boolean) => {
+    onUpdateOAuth(id, form, shouldDeleteLogo, authenticityToken).then(res => {
       if (res?.status === HttpStatus.OK) setPage('index');
     });
   };

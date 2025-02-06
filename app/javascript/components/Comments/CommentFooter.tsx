@@ -3,7 +3,7 @@ import I18n from 'i18n-js';
 
 import Separator from '../common/Separator';
 import { MutedText } from '../common/CustomTexts';
-import friendlyDate from '../../helpers/datetime';
+import friendlyDate, { fromRailsStringToJavascriptDate } from '../../helpers/datetime';
 import { ReplyFormState } from '../../reducers/replyFormReducer';
 import ActionLink from '../common/ActionLink';
 import { CancelIcon, DeleteIcon, EditIcon, ReplyIcon } from '../common/Icons';
@@ -71,7 +71,7 @@ const CommentFooter = ({
     </span>
 
     {
-      createdAt !== updatedAt &&
+      fromRailsStringToJavascriptDate(updatedAt).getTime() - fromRailsStringToJavascriptDate(createdAt).getTime() > 10000 &&
         <>
           <Separator />
           <MutedText>{ I18n.t('common.edited').toLowerCase() }</MutedText>

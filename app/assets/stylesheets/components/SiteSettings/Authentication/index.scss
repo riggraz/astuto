@@ -52,4 +52,27 @@
 
     font-size: 18px;
   }
+
+  .oAuthLogoPreview {
+    @extend .d-block, .my-2;
+  
+    position: relative;
+    display: inline-block;
+    width: fit-content;
+    height: fit-content;
+  }
+  
+  .oAuthLogoPreview .oAuthLogoPreviewImg {
+    display: block;
+    height: 50px;
+    width: auto;
+  }
+  
+  .oAuthLogoPreview.oAuthLogoPreviewShouldDelete {
+    border: 2px solid red;
+    
+    .oAuthLogoPreviewImg { filter: grayscale(100%); }
+  }
+
+  .oAuthLogoActions { @extend .d-flex; }
 }

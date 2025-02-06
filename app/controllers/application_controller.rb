@@ -39,7 +39,8 @@ class ApplicationController < ActionController::Base
         :full_name,
         :notifications_enabled,
         :recap_notification_frequency,
-        :invitation_token
+        :invitation_token,
+        :avatar,
       ]
 
       devise_parameter_sanitizer.permit(:sign_up, keys: additional_permitted_parameters)

@@ -32,6 +32,11 @@ class PostsController < ApplicationController
 
     # apply post status filter if present
     posts = posts.where(post_status_id: params[:post_status_ids].map { |id| id == "0" ? nil : id }) if params[:post_status_ids].present?
+
+    # check if posts have attachments
+    posts = posts.map do |post|
+      post.attributes.merge(has_attachments: post.attachments.attached?)
+    end
     
     render json: posts
   end
@@ -56,6 +61,11 @@ class PostsController < ApplicationController
 
     @post = Post.new(approval_status: approval_status)
     @post.assign_attributes(post_create_params(is_anonymous: is_anonymous))
+
+    # handle attachments
+    if Current.tenant.tenant_setting.allow_attachment_upload && params[:post][:attachments].present? && !is_anonymous
+      @post.attachments.attach(params[:post][:attachments])
+    end
 
     if @post.save
       Follow.create(post_id: @post.id, user_id: current_user.id) unless is_anonymous
@@ -87,7 +97,7 @@ class PostsController < ApplicationController
       )
       .eager_load(:user) # left outer join
       .find(params[:id])
-    
+
     @post_statuses = PostStatus.select(:id, :name, :color).order(order: :asc)
     @board = @post.board
 
@@ -96,7 +106,7 @@ class PostsController < ApplicationController
     respond_to do |format|
       format.html
 
-      format.json { render json: @post }
+      format.json { render json: @post.as_json.merge(attachment_urls: @post.attachments.order(:created_at).map { |attachment| attachment.blob.url }) }
     end
   end
 
@@ -105,6 +115,18 @@ class PostsController < ApplicationController
     authorize @post
     
     @post.assign_attributes(post_update_params)
+
+    # handle attachment deletion
+    if params[:post][:attachments_to_delete].present? && @post.attachments.attached?
+      @post.attachments.order(:created_at).each_with_index do |attachment, index|
+        attachment.purge if params[:post][:attachments_to_delete].include?(index.to_s)
+      end
+    end
+
+    # handle attachments
+    if Current.tenant.tenant_setting.allow_attachment_upload && params[:post][:attachments].present?
+      @post.attachments.attach(params[:post][:attachments])
+    end
 
     if @post.save
       if @post.post_status_id_previously_changed?
@@ -115,7 +137,7 @@ class PostsController < ApplicationController
         ).run
       end
 
-      render json: @post
+      render json: @post.as_json.merge(attachment_urls: @post.attachments.order(:created_at).map { |attachment| attachment.blob.url })
     else
       render json: {
         error: @post.errors.full_messages
@@ -150,6 +172,7 @@ class PostsController < ApplicationController
         :user_id,
         :board_id,
         :created_at,
+        'users.id as user_id', # required for avatar_url
         'users.email as user_email',
         'users.full_name as user_full_name'
       )
@@ -157,6 +180,12 @@ class PostsController < ApplicationController
       .where(approval_status: ["pending", "rejected"])
       .order_by(created_at: :desc)
       .limit(100)
+      .includes(user: { avatar_attachment: :blob }) # Preload avatars
+
+      posts = posts.map do |post|
+      user_avatar_url = post.user.avatar.attached? ? post.user.avatar.blob.url : nil
+      post.attributes.merge(user_avatar: user_avatar_url)
+    end
 
     render json: posts
   end
@@ -186,6 +215,10 @@ class PostsController < ApplicationController
     def post_update_params
       params
         .require(:post)
-        .permit(policy(@post).permitted_attributes_for_update)
+        .permit(
+          policy(@post)
+            .permitted_attributes_for_update
+            .concat([{ additional_params: [:attachments_to_delete] }])
+        )
     end
 end

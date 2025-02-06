@@ -3,8 +3,8 @@ import { ThunkAction } from 'redux-thunk';
 import { State } from '../../reducers/rootReducer';
 
 import ICommentJSON from '../../interfaces/json/IComment';
-import buildRequestHeaders from '../../helpers/buildRequestHeaders';
 import HttpStatus from '../../constants/http_status';
+import buildFormData from '../../helpers/buildFormData';
 
 export const COMMENT_SUBMIT_START = 'COMMENT_SUBMIT_START';
 interface CommentSubmitStartAction {
@@ -53,21 +53,24 @@ export const submitComment = (
   body: string,
   parentId: number,
   isPostUpdate: boolean,
+  attachments: File[],
   authenticityToken: string,
 ): ThunkAction<void, State, null, Action<string>> => async (dispatch) => {
   dispatch(commentSubmitStart(parentId));
 
   try {
+    let formDataObj = {
+      'comment[body]': body,
+      'comment[parent_id]': parentId,
+      'comment[is_post_update]': isPostUpdate,
+      'comment[attachments][]': attachments,
+    };
+    const requestBody = buildFormData(formDataObj);
+
     const res = await fetch(`/posts/${postId}/comments`, {
       method: 'POST',
-      headers: buildRequestHeaders(authenticityToken),
-      body: JSON.stringify({
-        comment: {
-          body,
-          parent_id: parentId,
-          is_post_update: isPostUpdate,
-        },
-      }),
+      headers: { 'X-CSRF-Token': authenticityToken },
+      body: requestBody,
     });
     const json = await res.json();
 
@@ -76,7 +79,11 @@ export const submitComment = (
     } else {
       dispatch(commentSubmitFailure(parentId, json.error));
     }
+
+    return Promise.resolve(res);
   } catch (e) {
     dispatch(commentSubmitFailure(parentId, e));
+
+    return Promise.resolve(null);
   }
 }

@@ -1,6 +1,5 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
-import Gravatar from 'react-gravatar';
 import I18n from 'i18n-js';
 
 import NewComment from './NewComment';
@@ -10,13 +9,18 @@ import { ReplyFormState } from '../../reducers/replyFormReducer';
 import CommentEditForm from './CommentEditForm';
 import CommentFooter from './CommentFooter';
 import { StaffIcon } from '../common/Icons';
+import Avatar from '../common/Avatar';
+import CommentAttachments from './CommentAttachments';
+import ITenantSetting from '../../interfaces/ITenantSetting';
 
 interface Props {
   id: number;
   body: string;
   isPostUpdate: boolean;
+  attachmentUrls?: string[];
   userFullName: string;
   userEmail: string;
+  userAvatar?: string;
   userRole: number;
   createdAt: string;
   updatedAt: string;
@@ -25,13 +29,15 @@ interface Props {
   handleToggleCommentReply(): void;
   handleCommentReplyBodyChange(e: React.FormEvent): void;
 
-  handleSubmitComment(body: string, parentId: number, isPostUpdate: boolean): void;
-  handleUpdateComment(commentId: number, body: string, isPostUpdate: boolean, onSuccess: Function): void;
+  handleSubmitComment(body: string, parentId: number, isPostUpdate: boolean, attachments: File[], onSuccess: Function): void;
+  handleUpdateComment(commentId: number, body: string, isPostUpdate: boolean, attachmentsToDelete: number[], attachments: File[], onSuccess: Function): void;
   handleDeleteComment(id: number): void;
 
+  tenantSetting: ITenantSetting;
   isLoggedIn: boolean;
   isPowerUser: boolean;
   currentUserEmail: string;
+  currentUserAvatar?: string;
 }
 
 interface State {
@@ -54,11 +60,13 @@ class Comment extends React.Component<Props, State> {
     this.setState({editMode: !this.state.editMode});
   }
 
-  _handleUpdateComment(body: string, isPostUpdate: boolean) {
+  _handleUpdateComment(body: string, isPostUpdate: boolean, attachmentsToDelete: number[], attachments: File[]) {
     this.props.handleUpdateComment(
       this.props.id,
       body,
       isPostUpdate,
+      attachmentsToDelete,
+      attachments,
       this.toggleEditMode,
     );
   }
@@ -68,8 +76,10 @@ class Comment extends React.Component<Props, State> {
       id,
       body,
       isPostUpdate,
+      attachmentUrls,
       userFullName,
       userEmail,
+      userAvatar,
       userRole,
       createdAt,
       updatedAt,
@@ -81,26 +91,26 @@ class Comment extends React.Component<Props, State> {
       handleSubmitComment,
       handleDeleteComment,
     
+      tenantSetting,
       isLoggedIn,
       isPowerUser,
       currentUserEmail,
+      currentUserAvatar,
     } = this.props;
 
     return (
       <div className="comment">
         <div className="commentHeader">
-          <Gravatar email={userEmail} size={28} className="gravatar" />
+          <Avatar avatarUrl={userAvatar} email={userEmail} size={28} />
           <span className="commentAuthor">{userFullName}</span>
           
           { userRole > 0 && <StaffIcon /> }
 
           {
-            isPostUpdate ?
+            isPostUpdate &&
               <span className="postUpdateBadge">
                 {I18n.t('post.comments.post_update_badge')}
               </span>
-            :
-              null
           }
         </div>
 
@@ -110,8 +120,10 @@ class Comment extends React.Component<Props, State> {
               id={id}
               initialBody={body}
               initialIsPostUpdate={isPostUpdate}
+              attachmentUrls={attachmentUrls}
 
               isPowerUser={isPowerUser}
+              tenantSetting={tenantSetting}
 
               handleUpdateComment={this._handleUpdateComment}
               toggleEditMode={this.toggleEditMode}
@@ -125,6 +137,11 @@ class Comment extends React.Component<Props, State> {
               >
                 {body}
               </ReactMarkdown>
+
+              {
+                attachmentUrls && attachmentUrls.length > 0 &&
+                  <CommentAttachments attachmentUrls={attachmentUrls} />
+              }
 
               <CommentFooter
                 id={id}
@@ -153,9 +170,11 @@ class Comment extends React.Component<Props, State> {
               handlePostUpdateFlag={() => null}
               handleSubmit={handleSubmitComment}
 
+              allowAttachmentUpload={tenantSetting.allow_attachment_upload}
               isLoggedIn={isLoggedIn}
               isPowerUser={isPowerUser}
               userEmail={currentUserEmail}
+              userAvatar={currentUserAvatar}
             />
             :
             null

@@ -18,7 +18,11 @@ const mapStateToProps = (state: State) => ({
 const mapDispatchToProps = (dispatch: any) => ({
   updateTenant(
     siteName: string,
-    siteLogo: string,
+    siteLogo: File,
+    shouldDeleteSiteLogo: boolean,
+    oldSiteLogo: string,
+    siteFavicon: File,
+    shouldDeleteSiteFavicon: boolean,
     brandDisplaySetting: TenantSettingBrandDisplay,
     locale: string,
     useBrowserLocale: boolean,
@@ -27,6 +31,7 @@ const mapDispatchToProps = (dispatch: any) => ({
     isPrivate: boolean,
     allowAnonymousFeedback: boolean,
     feedbackApprovalPolicy: TenantSettingFeedbackApprovalPolicy,
+    allowAttachmentUpload: boolean,
     logoLinksTo: TenantSettingLogoLinksTo,
     logoCustomUrl: string,
     showRoadmapInHeader: boolean,
@@ -40,6 +45,10 @@ const mapDispatchToProps = (dispatch: any) => ({
     return dispatch(updateTenant({
       siteName,
       siteLogo,
+      shouldDeleteSiteLogo,
+      oldSiteLogo,
+      siteFavicon,
+      shouldDeleteSiteFavicon,
       tenantSetting: {
         brand_display: brandDisplaySetting,
         use_browser_locale: useBrowserLocale,
@@ -47,6 +56,7 @@ const mapDispatchToProps = (dispatch: any) => ({
         is_private: isPrivate,
         allow_anonymous_feedback: allowAnonymousFeedback,
         feedback_approval_policy: feedbackApprovalPolicy,
+        allow_attachment_upload: allowAttachmentUpload,
         logo_links_to: logoLinksTo,
         logo_custom_url: logoCustomUrl,
         show_roadmap_in_header: showRoadmapInHeader,

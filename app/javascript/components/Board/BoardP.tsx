@@ -115,6 +115,7 @@ class BoardP extends React.Component<Props> {
         <Sidebar>
           <NewPost
             board={board}
+            tenantSetting={tenantSetting}
             isLoggedIn={isLoggedIn}
             currentUserFullName={currentUserFullName}
             isAnonymousFeedbackAllowed={tenantSetting.allow_anonymous_feedback}

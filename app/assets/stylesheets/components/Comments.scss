@@ -1,6 +1,8 @@
 .commentsContainer {
   @extend .mt-2;
 
+  .attachFilesSectionHidden { display: none; }
+
   .commentForm {
     @extend
       .form-control,
@@ -22,22 +24,42 @@
       .flex-column,
       .mt-4;
 
-    .commentBodyForm {
+    .newCommentBodyForm {
       @extend .d-flex;
+    }
+
+    .newCommentFooter {
+      @extend
+        .d-flex,
+        .justify-content-between,
+        .align-items-center;
+
+      .attachFilesSection {
+        margin-left: 58px;
+        margin-top: 1rem;
+      }
     }
 
     .commentIsUpdateForm {
       @extend
         .d-flex,
-        .justify-content-between,
+        .flex-column,
+        .align-self-start,
         .mt-3;
 
-      margin-left: 58px;
+      &.commentIsUpdateFormWithAttachment {
+        margin-right: 108px;
+        .checkboxSwitch { align-self: flex-end; }
+      }
+      &.commentIsUpdateFormWithoutAttachment {
+        margin-left: 58px;
+        .checkboxSwitch { align-self: flex-start; }
+      }
     }
 
     .currentUserAvatar {
       @extend
-        .gravatar,
+        .avatar,
         .align-self-end,
         .mr-2;
     }
@@ -53,7 +75,12 @@
   }
 
   .editCommentForm {
-    .commentFormContainer { @extend .d-block; }
+    @extend .my-3;
+
+    background-color: rgb(255 255 215);
+    padding: 16px;
+
+    .commentFormContainer, .editCommentFormAttachments { @extend .d-block; }
 
     textarea {
       @extend .my-2;
@@ -63,6 +90,13 @@
       @extend
         .d-flex,
         .justify-content-between;
+    }
+
+    .editCommentFormFooter {
+      @extend
+        .d-flex,
+        .justify-content-between,
+        .align-items-center;
     }
 
     .editCommentFormActions { @extend .d-flex; }
@@ -114,6 +148,17 @@
 
       p { @extend .my-2; }
       p:nth-child(1) { @extend .m-0; }
+    }
+
+    .commentAttachments {
+      @extend .mb-4;
+
+      .commentAttachment {
+        @extend .mx-2, .p-2;
+
+        height: 60px;
+        border: thin solid var(--astuto-grey-light);
+      }
     }
 
     .commentFooter {

@@ -1,5 +1,4 @@
 import * as React from "react";
-import Gravatar from 'react-gravatar';
 import I18n from 'i18n-js';
 
 import IUser, { UserRoles, USER_ROLE_ADMIN, USER_ROLE_MODERATOR, USER_ROLE_OWNER, USER_ROLE_USER, USER_STATUS_ACTIVE, USER_STATUS_BLOCKED, USER_STATUS_DELETED } from "../../../interfaces/IUser";
@@ -8,6 +7,7 @@ import UserForm from "./UserForm";
 import { MutedText } from "../../common/CustomTexts";
 import { BlockIcon, CancelIcon, EditIcon, UnblockIcon } from "../../common/Icons";
 import ActionLink from "../../common/ActionLink";
+import Avatar from "../../common/Avatar";
 
 interface Props {
   user: IUser;
@@ -94,7 +94,7 @@ class UserEditable extends React.Component<Props, State> {
           editMode === false ?
           <>
             <div className="userInfo">
-              <Gravatar email={user.email} size={42} className="gravatar userGravatar" />
+              <Avatar avatarUrl={user.avatarUrl} email={user.email} size={42} customClass="userAvatar" />
 
               <div className="userFullNameRoleStatus">
                 <span className="userFullName">{ user.fullName }</span>

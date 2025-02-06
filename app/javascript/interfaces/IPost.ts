@@ -15,6 +15,8 @@ interface IPost {
   title: string;
   slug?: string;
   description?: string;
+  attachmentUrls?: string[];
+  hasAttachments?: boolean;
   approvalStatus: PostApprovalStatus;
   boardId: number;
   postStatusId?: number;
@@ -25,6 +27,7 @@ interface IPost {
   userId: number;
   userEmail: string;
   userFullName: string;
+  userAvatar?: string;
   createdAt: string;
 }
 
@@ -35,6 +38,8 @@ export const postJSON2JS = (postJSON: IPostJSON): IPost => ({
   title: postJSON.title,
   slug: postJSON.slug,
   description: postJSON.description,
+  attachmentUrls: postJSON.attachment_urls,
+  hasAttachments: postJSON.has_attachments,
   approvalStatus: postJSON.approval_status,
   boardId: postJSON.board_id,
   postStatusId: postJSON.post_status_id,
@@ -45,5 +50,6 @@ export const postJSON2JS = (postJSON: IPostJSON): IPost => ({
   userId: postJSON.user_id,
   userEmail: postJSON.user_email,
   userFullName: postJSON.user_full_name,
+  userAvatar: postJSON.user_avatar,
   createdAt: postJSON.created_at,
 });

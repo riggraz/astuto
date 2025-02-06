@@ -54,7 +54,6 @@ feature 'site settings: authentication', type: :system, js: true do
 
     within o_auth_form_selector do
       fill_in 'Name', with: new_o_auth_name
-      fill_in 'Logo', with: o_auth.logo
       fill_in 'Client ID', with: '1234567890'
       fill_in 'Client secret', with: '1234567890'
       fill_in 'Authorize URL', with: 'https://example.com/authorize'

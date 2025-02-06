@@ -1,6 +1,6 @@
-const buildRequestHeaders = (authenticityToken: string) => ({
+const buildRequestHeaders = (authenticityToken: string, contentType: string = 'application/json') => ({
   Accept: 'application/json',
-  'Content-Type': 'application/json',
+  'Content-Type': contentType,
   'X-CSRF-Token': authenticityToken,
 });
 

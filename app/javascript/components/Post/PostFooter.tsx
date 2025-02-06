@@ -1,12 +1,11 @@
 import * as React from 'react';
-import Gravatar from 'react-gravatar';
 import I18n from 'i18n-js';
 
-import { MutedText } from '../common/CustomTexts';
 import friendlyDate from '../../helpers/datetime';
 import Separator from '../common/Separator';
 import ActionLink from '../common/ActionLink';
 import { DeleteIcon, EditIcon } from '../common/Icons';
+import Avatar from '../common/Avatar';
 
 interface Props {
   createdAt: string;
@@ -15,6 +14,7 @@ interface Props {
   isPowerUser: boolean;
   authorEmail: string;
   authorFullName: string;
+  authorAvatar?: string;
   currentUserEmail: string;
 }
 
@@ -25,6 +25,7 @@ const PostFooter = ({
   isPowerUser,
   authorEmail,
   authorFullName,
+  authorAvatar,
   currentUserEmail,
 }: Props) => (
   <div className="postFooter">
@@ -33,7 +34,7 @@ const PostFooter = ({
         authorEmail ?
           <>
           <span>{I18n.t('post.published_by').toLowerCase()} &nbsp;</span>
-          <Gravatar email={authorEmail} size={24} className="postAuthorAvatar" /> &nbsp;
+          <Avatar avatarUrl={authorAvatar} email={authorEmail} size={24} customClass="postAuthorAvatar" /> &nbsp;
           <span>{authorFullName}</span>
           </>
         :

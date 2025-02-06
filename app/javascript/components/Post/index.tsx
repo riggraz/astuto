@@ -21,6 +21,7 @@ interface Props {
   isPowerUser: boolean;
   currentUserFullName: string;
   currentUserEmail: string;
+  currentUserAvatar?: string;
   tenantSetting: ITenantSetting;
   authenticityToken: string;
 }
@@ -44,6 +45,7 @@ class PostRoot extends React.Component<Props> {
       isPowerUser,
       currentUserFullName,
       currentUserEmail,
+      currentUserAvatar,
       tenantSetting,
       authenticityToken
     } = this.props;
@@ -60,6 +62,7 @@ class PostRoot extends React.Component<Props> {
           isPowerUser={isPowerUser}
           currentUserFullName={currentUserFullName}
           currentUserEmail={currentUserEmail}
+          currentUserAvatar={currentUserAvatar}
           tenantSetting={tenantSetting}
           authenticityToken={authenticityToken}
         />

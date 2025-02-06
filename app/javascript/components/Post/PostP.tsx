@@ -9,6 +9,7 @@ import ITenantSetting from '../../interfaces/ITenantSetting';
 
 import PostUpdateList from './PostUpdateList';
 import PostEditForm from './PostEditForm';
+import PostAttachments from './PostAttachments';
 import PostFooter from './PostFooter';
 import LikeList from './LikeList';
 import ActionBox from './ActionBox';
@@ -47,6 +48,7 @@ interface Props {
   isPowerUser: boolean;
   currentUserFullName: string;
   currentUserEmail: string;
+  currentUserAvatar?: string;
   tenantSetting: ITenantSetting;
   authenticityToken: string;
 
@@ -57,6 +59,8 @@ interface Props {
     description: string,
     boardId: number,
     postStatusId: number,
+    attachmentsToDelete: number[],
+    attachments: File[],
     authenticityToken: string,
   ): Promise<any>;
 
@@ -112,7 +116,14 @@ class PostP extends React.Component<Props, State> {
     this.props.requestPostStatusChanges(postId);
   }
 
-  _handleUpdatePost(title: string, description: string, boardId: number, postStatusId: number) {
+  _handleUpdatePost(
+    title: string,
+    description: string,
+    boardId: number,
+    postStatusId: number,
+    attachmentsToDelete: number[],
+    attachments: File[],
+  ) {
     const {
       postId,
       post,
@@ -132,6 +143,8 @@ class PostP extends React.Component<Props, State> {
       description,
       boardId,
       postStatusId,
+      attachmentsToDelete,
+      attachments,
       authenticityToken,
     ).then(res => {
       if (res?.status !== HttpStatus.OK) return;
@@ -171,6 +184,7 @@ class PostP extends React.Component<Props, State> {
       isLoggedIn,
       isPowerUser,
       currentUserEmail,
+      currentUserAvatar,
       tenantSetting,
       authenticityToken,
 
@@ -232,12 +246,14 @@ class PostP extends React.Component<Props, State> {
           editMode ?
             <PostEditForm
               {...editForm}
+              attachmentUrls={postToShow.attachmentUrls}
 
               handleChangeTitle={handleChangeEditFormTitle}
               handleChangeDescription={handleChangeEditFormDescription}
               handleChangeBoard={handleChangeEditFormBoard}
               handleChangePostStatus={handleChangeEditFormPostStatus}
 
+              tenantSetting={tenantSetting}
               isPowerUser={isPowerUser}
               boards={boards}
               postStatuses={postStatuses}
@@ -292,6 +308,10 @@ class PostP extends React.Component<Props, State> {
                 {postToShow.description}
               </ReactMarkdown>
 
+              <PostAttachments
+                attachmentUrls={postToShow?.attachmentUrls}
+              />
+
               <PostFooter
                 createdAt={postToShow.createdAt}
                 handleDeletePost={this._handleDeletePost}
@@ -300,6 +320,7 @@ class PostP extends React.Component<Props, State> {
                 isPowerUser={isPowerUser}
                 authorEmail={postToShow.userEmail}
                 authorFullName={postToShow.userFullName}
+                authorAvatar={originPost.authorAvatar}
                 currentUserEmail={currentUserEmail}
               />
             </>
@@ -307,9 +328,11 @@ class PostP extends React.Component<Props, State> {
           
           <Comments
             postId={this.props.postId}
+            tenantSetting={tenantSetting}
             isLoggedIn={isLoggedIn}
             isPowerUser={isPowerUser}
             userEmail={currentUserEmail}
+            userAvatar={currentUserAvatar}
             authenticityToken={authenticityToken}
           />
         </div>

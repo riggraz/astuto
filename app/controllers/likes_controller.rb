@@ -7,10 +7,17 @@ class LikesController < ApplicationController
       .select(
         :id,
         :full_name,
-        :email
+        :email,
+        'users.id as user_id', # required for avatar_url
       )
       .left_outer_joins(:user)
       .where(post_id: params[:post_id])
+      .includes(user: { avatar_attachment: :blob }) # Preload avatars
+
+    likes = likes.map do |like|
+      user_avatar_url = like.user.avatar.attached? ? like.user.avatar.blob.url : nil
+      like.attributes.merge(user_avatar: user_avatar_url)
+    end
 
     render json: likes
   end
@@ -23,6 +30,7 @@ class LikesController < ApplicationController
         id: like.id,
         full_name: current_user.full_name,
         email: current_user.email,
+        user_avatar: current_user.avatar.attached? ? current_user.avatar.blob.url : nil,
       }, status: :created
     else
       render json: {

@@ -4,6 +4,7 @@ en:
       or: 'or'
     errors:
       unknown: 'An unknown error occurred, please try again'
+      invalid_file: 'The files you uploaded are invalid: %{errors}'
     validations:
       required: '%{attribute} is required'
       email: 'Invalid email'
@@ -13,6 +14,7 @@ en:
     forms:
       auth:
         email: 'Email'
+        avatar: 'Avatar'
         full_name: 'Full name'
         password: 'Password'
         password_confirmation: 'Password confirmation'
@@ -73,6 +75,7 @@ en:
     user_staff: 'Staff'
     language_supported: '%{language} supported'
     powered_by: 'Powered by'
+    drag_and_drop: 'Drag and drop or click to upload images (max %{maxCount} files, max %{maxSize}KB each)'
     buttons:
       new: 'New'
       edit: 'Edit'
@@ -88,6 +91,7 @@ en:
       reject: 'Reject'
       copy_to_clipboard: 'Copy to clipboard'
       preview: 'Preview'
+      attach: 'Attach'
     datetime:
       now: 'just now'
       minutes:
@@ -212,6 +216,7 @@ en:
       feedback_approval_policy_never_require_approval: 'Never require approval'
       feedback_approval_policy_always_require_approval: 'Always require approval'
       feedback_approval_policy_help: 'If you require approval, submitted feedback will remain hidden from the public until a moderator or administrator approves it. Feedback submitted by moderators and administrators is always approved automatically.'
+      allow_attachment_upload_help: 'If you enable this setting, users will be able to upload images to their feedback.'
       subtitle_header: 'Header'
       logo_links_to_root_page: 'Root page'
       logo_links_to_custom_url: 'Custom URL'

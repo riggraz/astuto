@@ -19,12 +19,12 @@ RSpec.describe CommentPolicy do
       it { should permit(:update) }
       it { should permit(:destroy) }
 
-      it 'permits "body" and "parent_id" attributes for create' do
-        expect(subject.permitted_attributes_for_create).to eq([:body, :parent_id])
+      it 'permits "body", "parent_id" and "attachments" attributes for create' do
+        expect(subject.permitted_attributes_for_create).to eq([:body, :parent_id, :attachments])
       end
 
-      it 'permits "body" attribute for update' do
-        expect(subject.permitted_attributes_for_update).to eq([:body])
+      it 'permits "body" and "attachments" attribute for update' do
+        expect(subject.permitted_attributes_for_update).to eq([:body, :attachments])
       end
     end
   end
@@ -35,12 +35,12 @@ RSpec.describe CommentPolicy do
     it { should permit(:update) }
     it { should permit(:destroy) }
 
-    it 'permits "body", "parent_id" and "is_post_update" attributes for create' do
-      expect(subject.permitted_attributes_for_create).to eq([:body, :parent_id, :is_post_update])
+    it 'permits "body", "parent_id", "is_post_update" and "attachments" attributes for create' do
+      expect(subject.permitted_attributes_for_create).to eq([:body, :parent_id, :is_post_update, :attachments])
     end
 
-    it 'permits "body" and "is_post_update" attribute for update' do
-      expect(subject.permitted_attributes_for_update).to eq([:body, :is_post_update])
+    it 'permits "body", "is_post_update" and "attachments" attributes for update' do
+      expect(subject.permitted_attributes_for_update).to eq([:body, :is_post_update, :attachments])
     end
   end
 

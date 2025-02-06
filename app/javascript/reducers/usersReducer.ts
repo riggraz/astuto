@@ -44,6 +44,7 @@ const usersReducer = (
           id: userJson.id,
           email: userJson.email,
           fullName: userJson.full_name,
+          avatarUrl: userJson.avatar_url,
           role: userJson.role,
           status: userJson.status,
         })),

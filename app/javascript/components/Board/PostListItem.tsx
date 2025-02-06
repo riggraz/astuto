@@ -6,6 +6,7 @@ import CommentsNumber from '../common/CommentsNumber';
 import PostStatusLabel from '../common/PostStatusLabel';
 
 import IPostStatus from '../../interfaces/IPostStatus';
+import { ImageIcon } from '../common/Icons';
 
 interface Props {
   id: number;
@@ -18,6 +19,7 @@ interface Props {
   showLikeButtons: boolean;
   liked: number;
   commentsCount: number;
+  hasAttachments: boolean;
 
   isLoggedIn: boolean;
   authenticityToken: string;
@@ -34,6 +36,7 @@ const PostListItem = ({
   showLikeButtons,
   liked,
   commentsCount,
+  hasAttachments,
 
   isLoggedIn,
   authenticityToken,
@@ -58,7 +61,10 @@ const PostListItem = ({
 
       <div className="postDetails">
         <CommentsNumber number={commentsCount} />
-        { postStatus ? <PostStatusLabel {...postStatus} /> : null }
+        
+        { postStatus && <PostStatusLabel {...postStatus} /> }
+
+        { hasAttachments && <span style={{marginLeft: '4px'}}><ImageIcon /></span> }
       </div>
     </div>
   </div>

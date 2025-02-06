@@ -71,7 +71,7 @@
             .p-2,
             .my-1;
 
-          .gravatar {
+          .avatar {
             @extend .align-self-center;
           }
 
@@ -149,13 +149,24 @@
       }
     }
 
+    .postAttachments {
+      @extend .mb-4;
+
+      .postAttachment {
+        @extend .mx-2, .p-2;
+
+        height: 80px;
+        border: thin solid var(--astuto-grey-light);
+      }
+    }
+
     .postFooter {
       .postAuthor {
         @extend
           .mutedText,
           .mb-2;
 
-        .postAuthorAvatar { @extend .gravatar; }
+        .postAuthorAvatar { @extend .avatar; }
       }
 
       .postFooterActions { @extend .d-flex; }
@@ -173,7 +184,7 @@
       }
 
       .postEditFormButtons {
-        @extend .d-flex, .justify-content-end;
+        @extend .d-flex, .justify-content-end, .mt-3;
       }
 
       #selectPickerBoard { margin-right: 4px !important; }

@@ -6,13 +6,32 @@ local:
   service: Disk
   root: <%= Rails.root.join("storage") %>
 
-# Use rails credentials:edit to set the AWS secrets (as aws:access_key_id|secret_access_key)
-# amazon:
-#   service: S3
-#   access_key_id: <%= Rails.application.credentials.dig(:aws, :access_key_id) %>
-#   secret_access_key: <%= Rails.application.credentials.dig(:aws, :secret_access_key) %>
-#   region: us-east-1
-#   bucket: your_own_bucket
+s3_private:
+  service: S3
+  public: false
+  endpoint: <%= ENV["S3_ENDPOINT"] %>
+  bucket: <%= ENV["S3_BUCKET"] %>
+  access_key_id: <%= ENV["S3_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["S3_ACCESS_KEY_SECRET"] %>
+  region: <%= ENV.fetch("S3_REGION") { 'na' } %>
+  http_open_timeout: 5
+  http_read_timeout: 10
+  retry_limit: 3
+
+s3_public:
+  service: S3
+  public: true
+  endpoint: <%= ENV["S3_ENDPOINT"] %>
+  bucket: <%= ENV["S3_BUCKET"] %>
+  access_key_id: <%= ENV["S3_ACCESS_KEY_ID"] %>
+  secret_access_key: <%= ENV["S3_ACCESS_KEY_SECRET"] %>
+  region: <%= ENV.fetch("S3_REGION") { 'na' } %>
+  http_open_timeout: 5
+  http_read_timeout: 10
+  retry_limit: 3
+
+
+
 
 # Remember not to checkin your GCS keyfile to a repository
 # google:

@@ -1,9 +1,8 @@
 import * as React from 'react';
 import ReactMarkdown from 'react-markdown';
-import Gravatar from 'react-gravatar';
 import I18n from 'i18n-js';
 
-import { DangerText, CenteredMutedText, MutedText } from '../common/CustomTexts';
+import { DangerText, CenteredMutedText } from '../common/CustomTexts';
 import Spinner from '../common/Spinner';
 
 import IComment from '../../interfaces/IComment';
@@ -13,6 +12,7 @@ import IPostStatus from '../../interfaces/IPostStatus';
 import friendlyDate from '../../helpers/datetime';
 import PostStatusLabel from '../common/PostStatusLabel';
 import SidebarBox from '../common/SidebarBox';
+import Avatar from '../common/Avatar';
 
 interface Props {
   postUpdates: Array<IComment | IPostStatusChange>;
@@ -42,7 +42,8 @@ const PostUpdateList = ({
         postUpdates.map((postUpdate, i) => (
           <div className="postUpdateListItem" key={i}>
             <div className="postUpdateListItemHeader">
-              <Gravatar email={postUpdate.userEmail} size={28} className="gravatar" />
+              <Avatar avatarUrl={postUpdate.userAvatar} email={postUpdate.userEmail} size={28} />
+              
               <span>{postUpdate.userFullName}</span>
             </div>
 

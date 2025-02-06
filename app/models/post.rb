@@ -14,6 +14,8 @@ class Post < ApplicationRecord
   has_many :comments, dependent: :destroy
   has_many :post_status_changes, dependent: :destroy
 
+  has_many_attached :attachments
+
   after_create :run_new_post_webhooks
   after_destroy :run_delete_post_webhooks
 
@@ -24,6 +26,10 @@ class Post < ApplicationRecord
   ] 
 
   validates :title, presence: true, length: { in: 4..128 }
+  validates :attachments,
+    content_type: Rails.application.accepted_image_types,
+    size: { less_than: 2048.kilobytes },
+    limit: { max: 5 }
 
   paginates_per Rails.application.posts_per_page
 

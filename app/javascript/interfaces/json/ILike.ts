@@ -4,6 +4,7 @@ interface ILikeJSON {
   post_id: number;
   full_name: string;
   email: string;
+  user_avatar?: string;
 }
 
 export default ILikeJSON;

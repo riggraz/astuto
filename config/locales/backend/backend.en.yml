@@ -128,6 +128,7 @@ en:
       tenant:
         site_name: 'Site name'
         site_logo: 'Site logo'
+        site_favicon: 'Site favicon'
         subdomain: 'Subdomain'
         locale: 'Language'
         custom_domain: 'Custom domain'
@@ -139,6 +140,7 @@ en:
         allowed_email_domains: 'Allowed email domains'
         allow_anonymous_feedback: 'Allow anonymous feedback'
         feedback_approval_policy: 'Feedback approval policy'
+        allow_attachment_upload: 'Allow attachment upload'
         show_vote_count: 'Show vote count to users'
         show_vote_button_in_board: 'Show vote buttons in board page'
         hide_unused_statuses_in_filter_by_status: 'Hide unused statuses in filter by status'

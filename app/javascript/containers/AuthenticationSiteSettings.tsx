@@ -24,12 +24,12 @@ const mapDispatchToProps = (dispatch: any) => ({
     dispatch(requestOAuths());
   },
 
-  onSubmitOAuth(oAuth: IOAuth, authenticityToken: string): Promise<any> {
-    return dispatch(submitOAuth(oAuth, authenticityToken));
+  onSubmitOAuth(oAuth: IOAuth, oAuthLogo: File = null, authenticityToken: string): Promise<any> {
+    return dispatch(submitOAuth(oAuth, oAuthLogo, authenticityToken));
   },
 
-  onUpdateOAuth(id: number, form: ISiteSettingsOAuthForm, authenticityToken: string): Promise<any> {
-    return dispatch(updateOAuth({id, form, authenticityToken}));
+  onUpdateOAuth(id: number, form: ISiteSettingsOAuthForm, shouldDeleteLogo: boolean, authenticityToken: string): Promise<any> {
+    return dispatch(updateOAuth({id, form, isEnabled: undefined, shouldDeleteLogo, authenticityToken}));
   },
 
   onToggleEnabledOAuth(id: number, isEnabled: boolean, authenticityToken: string) {

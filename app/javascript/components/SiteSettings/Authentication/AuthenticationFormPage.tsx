@@ -8,8 +8,8 @@ import { DangerText } from '../../common/CustomTexts';
 import { IOAuth } from '../../../interfaces/IOAuth';
 
 interface Props {
-  handleSubmitOAuth(oAuth: IOAuth): void;
-  handleUpdateOAuth(id: number, form: ISiteSettingsOAuthForm): void;
+  handleSubmitOAuth(oAuth: IOAuth, oAuthLogo: File): void;
+  handleUpdateOAuth(id: number, form: ISiteSettingsOAuthForm, shouldDeleteLogo: boolean): void;
   isSubmitting: boolean;
   submitError: string;
   selectedOAuth: IOAuth;

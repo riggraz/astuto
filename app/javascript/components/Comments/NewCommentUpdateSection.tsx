@@ -7,13 +7,15 @@ import Switch from '../common/Switch';
 interface Props {
   postUpdateFlagValue: boolean;
   handlePostUpdateFlag(): void;
+  allowAttachmentUpload?: boolean;
 }
 
 const NewCommentUpdateSection = ({
   postUpdateFlagValue,
   handlePostUpdateFlag,
+  allowAttachmentUpload = true,
 }: Props) => (
-  <div className="commentIsUpdateForm">
+  <div className={`commentIsUpdateForm${allowAttachmentUpload ? ' commentIsUpdateFormWithAttachment' : ' commentIsUpdateFormWithoutAttachment'}`}>
     <Switch
       htmlId="isPostUpdateFlag"
       onClick={handlePostUpdateFlag}

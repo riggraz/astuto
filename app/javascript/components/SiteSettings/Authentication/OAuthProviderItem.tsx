@@ -29,8 +29,8 @@ const OAuthProviderItem = ({
   <li className="oAuthListItem">
     <div className="oAuthInfo">
       {
-        oAuth.logo && oAuth.logo.length > 0 ?
-          <img src={oAuth.logo} className="oAuthLogo" width={42} height={42} />
+        oAuth.logoUrl && oAuth.logoUrl.length > 0 ?
+          <img src={oAuth.logoUrl} className="oAuthLogo" width={42} height={42} />
         :
           <div className="oauthLogo" style={{width: 42, height: 42}}></div>
       }

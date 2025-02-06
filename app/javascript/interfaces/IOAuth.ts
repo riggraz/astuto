@@ -1,7 +1,7 @@
 export interface IOAuth {
   id?: number;
   name: string;
-  logo?: string;
+  logoUrl?: string;
   isEnabled: boolean;
   clientId: string;
   clientSecret?: string;
@@ -20,7 +20,7 @@ export interface IOAuth {
 export interface IOAuthJSON {
   id: string;
   name: string;
-  logo?: string;
+  logo_url?: string;
   is_enabled: boolean;
   client_id: string;
   client_secret?: string;
@@ -39,7 +39,7 @@ export interface IOAuthJSON {
 export const oAuthJSON2JS = (oAuthJSON: IOAuthJSON): IOAuth => ({
   id: parseInt(oAuthJSON.id),
   name: oAuthJSON.name,
-  logo: oAuthJSON.logo,
+  logoUrl: oAuthJSON.logo_url,
   isEnabled: oAuthJSON.is_enabled,
   clientId: oAuthJSON.client_id,
   clientSecret: oAuthJSON.client_secret,
@@ -58,7 +58,7 @@ export const oAuthJSON2JS = (oAuthJSON: IOAuthJSON): IOAuth => ({
 export const oAuthJS2JSON = (oAuth: IOAuth) => ({
   id: oAuth.id?.toString(),
   name: oAuth.name,
-  logo: oAuth.logo,
+  logo_url: oAuth.logoUrl,
   is_enabled: oAuth.isEnabled,
   client_id: oAuth.clientId,
   client_secret: oAuth.clientSecret,

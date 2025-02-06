@@ -63,6 +63,7 @@ const PostList = ({
               showLikeButtons={showLikeButtons}
               liked={post.liked}
               commentsCount={post.commentsCount}
+              hasAttachments={post.hasAttachments}
 
               isLoggedIn={isLoggedIn}
               authenticityToken={authenticityToken}

@@ -6,6 +6,7 @@ class OAuth < ApplicationRecord
   extend FriendlyId
 
   has_many :tenant_default_o_auths, dependent: :destroy
+  has_one_attached :logo, service: ENV.fetch('ACTIVE_STORAGE_PUBLIC_SERVICE', :local).to_sym
 
   attr_accessor :state
 
@@ -18,11 +19,18 @@ class OAuth < ApplicationRecord
   validates :profile_url, presence: true
   validates :scope, presence: true
   validates :json_user_email_path, presence: true
+  validates :logo,
+    content_type: Rails.application.accepted_image_types,
+    size: { less_than: 64.kilobytes }
 
   friendly_id :generate_random_slug, use: :scoped, scope: :tenant_id
 
   def is_default?
     tenant_id == nil
+  end
+
+  def logo_url
+    self.logo.attached? ? self.logo.blob.url : nil
   end
 
   def callback_url

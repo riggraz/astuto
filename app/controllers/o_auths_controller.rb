@@ -170,6 +170,10 @@ class OAuthsController < ApplicationController
     @o_auth = OAuth.find(params[:id])
     authorize @o_auth
 
+    if params[:o_auth][:should_delete_logo] == "true"
+      @o_auth.logo.purge if @o_auth.logo.attached?
+    end
+
     if @o_auth.update(o_auth_params)
       render json: to_json_custom(@o_auth)
     else
@@ -198,7 +202,7 @@ class OAuthsController < ApplicationController
 
     def to_json_custom(o_auth)
       o_auth.as_json(
-        methods: [:callback_url, :default_o_auth_is_enabled],
+        methods: [:logo_url, :callback_url, :default_o_auth_is_enabled],
         except: [:client_secret]
       )
     end
@@ -206,6 +210,10 @@ class OAuthsController < ApplicationController
     def o_auth_params
       params
         .require(:o_auth)
-        .permit(policy(@o_auth).permitted_attributes)
+        .permit(
+          policy(@o_auth)
+            .permitted_attributes
+            .concat([{ additional_params: [:should_delete_logo] }])
+        )
     end
 end

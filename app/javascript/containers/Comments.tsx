@@ -44,9 +44,13 @@ const mapDispatchToProps = (dispatch) => ({
     body: string,
     parentId: number,
     isPostUpdate: boolean,
+    attachments: File[],
+    onSuccess: Function,
     authenticityToken: string,
   ) {
-    dispatch(submitComment(postId, body, parentId, isPostUpdate, authenticityToken));
+    dispatch(submitComment(postId, body, parentId, isPostUpdate, attachments, authenticityToken)).then(res => {
+      if (res && res.status === HttpStatus.Created) onSuccess();
+    });
   },
 
   updateComment(
@@ -54,10 +58,12 @@ const mapDispatchToProps = (dispatch) => ({
     commentId: number,
     body: string,
     isPostUpdate: boolean,
+    attachmentsToDelete: number[],
+    attachments: File[],
     onSuccess: Function,
     authenticityToken: string,
   ) {
-    dispatch(updateComment(postId, commentId, body, isPostUpdate, authenticityToken)).then(res => {
+    dispatch(updateComment(postId, commentId, body, isPostUpdate, attachmentsToDelete, attachments, authenticityToken)).then(res => {
       if (res && res.status === HttpStatus.OK) onSuccess();
     });
   },

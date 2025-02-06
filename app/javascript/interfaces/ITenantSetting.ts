@@ -58,6 +58,7 @@ interface ITenantSetting {
   allowed_email_domains?: string;
   allow_anonymous_feedback?: boolean;
   feedback_approval_policy?: TenantSettingFeedbackApprovalPolicy;
+  allow_attachment_upload?: boolean;
   show_vote_count?: boolean;
   show_vote_button_in_board?: boolean;
   show_roadmap_in_header?: boolean;

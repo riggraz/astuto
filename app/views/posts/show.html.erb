@@ -8,11 +8,13 @@
       originPost: {
         post: @post,
         likes: @post.likes.select(:id, :full_name, :email).left_outer_joins(:user),
+        authorAvatar: @post.user ? @post.user.avatar.attached? ? @post.user.avatar.blob.url : nil : nil,
       },
       isLoggedIn: user_signed_in?,
       isPowerUser: user_signed_in? ? current_user.moderator? : false,
       currentUserFullName: user_signed_in? ? current_user.full_name : nil,
       currentUserEmail: user_signed_in? ? current_user.email : nil,
+      currentUserAvatar: user_signed_in? ? current_user.avatar.attached? ? current_user.avatar.blob.url : nil : nil,
       tenantSetting: @tenant_setting,
       authenticityToken: form_authenticity_token,
     }

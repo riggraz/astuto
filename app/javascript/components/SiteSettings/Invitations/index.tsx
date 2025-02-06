@@ -1,5 +1,4 @@
 import * as React from 'react';
-import Gravatar from 'react-gravatar';
 import { useForm } from 'react-hook-form';
 import I18n from 'i18n-js';
 
@@ -13,6 +12,7 @@ import IInvitation from '../../../interfaces/IInvitation';
 import friendlyDate, { fromRailsStringToJavascriptDate, nMonthsAgo } from '../../../helpers/datetime';
 import ActionLink from '../../common/ActionLink';
 import { TestIcon } from '../../common/Icons';
+import Avatar from '../../common/Avatar';
 
 interface Props {
   siteName: string;
@@ -218,7 +218,8 @@ const Invitations = ({ siteName, invitations, currentUserEmail, authenticityToke
           invitationsToDisplay.map((invitation, i) => (
             <li key={i} className="invitationListItem">
               <div className="invitationUserInfo">
-                <Gravatar email={invitation.email} size={42} className="gravatar userGravatar" />
+                <Avatar email={invitation.email} size={42} customClass="userAvatar" />
+
                 <span className="invitationEmail">{ invitation.email }</span>
               </div>
 

@@ -4,12 +4,16 @@ import I18n from 'i18n-js';
 import Button from '../common/Button';
 import { SmallMutedText } from '../common/CustomTexts';
 import { MarkdownIcon } from '../common/Icons';
+import Dropzone from '../common/Dropzone';
+import ITenantSetting from '../../interfaces/ITenantSetting';
 
 interface Props {
   title: string;
   description: string;
+  attachments: File[];
   handleTitleChange(title: string): void;
   handleDescriptionChange(description: string): void;
+  handleAttachmentsChange(attachments: File[]): void;
 
   handleSubmit(e: object): void;
 
@@ -18,6 +22,7 @@ interface Props {
   handleDnf1Change(dnf1: string): void;
   handleDnf2Change(dnf2: string): void;
 
+  tenantSetting: ITenantSetting;
   currentUserFullName: string;
   isSubmissionAnonymous: boolean;
 }
@@ -25,8 +30,10 @@ interface Props {
 const NewPostForm = ({
   title,
   description,
+  attachments,
   handleTitleChange,
   handleDescriptionChange,
+  handleAttachmentsChange,
 
   handleSubmit,
 
@@ -35,11 +42,14 @@ const NewPostForm = ({
   handleDnf1Change,
   handleDnf2Change,
 
+  tenantSetting,
   currentUserFullName,
   isSubmissionAnonymous,
   }: Props) => (
   <div className="newPostForm">
-    <form>
+    <form encType="multipart/form-data">
+
+      { /* Title */ }
       <div className="form-group">
         <input
           type="text"
@@ -84,6 +94,7 @@ const NewPostForm = ({
         className="form-control"
       />
 
+      { /* Description */ }
       <div className="form-group">
         <textarea
           value={description}
@@ -98,6 +109,19 @@ const NewPostForm = ({
           <MarkdownIcon style={{position: 'absolute', left: '6px', top: '-28px'}} />
         </div>
       </div>
+
+      { /* Attachments */ }
+      {
+        tenantSetting.allow_attachment_upload && !isSubmissionAnonymous &&
+          <div className="form-group">
+            <Dropzone
+              files={attachments}
+              setFiles={handleAttachmentsChange}
+              maxSizeKB={2048}
+              maxFiles={5}
+            />
+          </div>
+      }
 
       <Button onClick={e => handleSubmit(e)} className="submitBtn d-block mx-auto">
         {I18n.t('board.new_post.submit_button')}

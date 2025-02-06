@@ -189,7 +189,7 @@ body {
   height: 2px;
 }
 
-.gravatar {
+.avatar {
   border-radius: 100%;
 }
 
@@ -350,4 +350,59 @@ body {
   position: relative;
   bottom: 8px;
   scale: 80%;
+}
+
+.dropzone {
+  border: 2px dashed var(--astuto-grey);
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.dropzone-disabled {
+  cursor: not-allowed;
+}
+
+.dropzone-accept {
+  border-color: rgb(0, 189, 0);
+}
+.dropzone-reject {
+  border-color: rgb(255, 0, 0);
+}
+
+.thumbnailsContainer {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-top: 16px;
+  
+  .thumbnail {
+    display: inline-flex;
+    border-radius: 2px;
+    border: 1px solid #eaeaea;
+    margin-bottom: 8px;
+    margin-right: 8px;
+    width: 80px;
+    height: 80px;
+    padding: 4px;
+    box-sizing: border-box;
+
+    .thumbnailInner {
+      display: flex;
+      min-width: 0;
+      overflow: hidden;
+
+      .thumbnailImage {
+        display: block;
+        width: auto;
+        height: 100%;
+      }
+    }
+
+    &.thumbnailToDelete {
+      border: 2px solid red;
+      
+      .thumbnailInner { filter: grayscale(100%); }
+    }
+  }
 }
